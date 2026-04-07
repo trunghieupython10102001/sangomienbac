@@ -24,3 +24,95 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes shake {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  10%, 30%, 50%, 70%, 90% {
+    transform: rotate(-10deg);
+  }
+  20%, 40%, 60%, 80% {
+    transform: rotate(10deg);
+  }
+}
+
+header .top-bar {
+  max-height: 80px;
+  opacity: 1;
+}
+
+header.scrolled .top-bar {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  opacity: 0;
+}
+
+header nav {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+header.scrolled nav {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+header .logo-container {
+  width: 4rem;
+  height: 4rem;
+}
+
+@media (min-width: 640px) {
+  header .logo-container {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+header.scrolled .logo-container {
+  width: 3rem;
+  height: 3rem;
+}
+
+@media (min-width: 640px) {
+  header.scrolled .logo-container {
+    width: 4rem;
+    height: 4rem;
+  }
+}
+
+header .logo-text {
+  font-size: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  header .logo-text {
+    font-size: 1.5rem;
+  }
+}
+
+header.scrolled .logo-text {
+  font-size: 1.125rem;
+}
+
+@media (min-width: 640px) {
+  header.scrolled .logo-text {
+    font-size: 1.25rem;
+  }
+}
+
+header .logo-tagline {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  header .logo-tagline {
+    display: block;
+  }
+}
+
+header.scrolled .logo-tagline {
+  display: none;
+}

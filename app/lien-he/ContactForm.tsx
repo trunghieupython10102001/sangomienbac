@@ -16,7 +16,7 @@ export default function ContactForm() {
     const data = {
       name: formData.get('name') as string,
       phone: formData.get('phone') as string,
-      email: formData.get('email') as string,
+      area: formData.get('area') as string,
       message: formData.get('message') as string,
     };
 
@@ -49,7 +49,7 @@ export default function ContactForm() {
     <form className="space-y-5" onSubmit={handleSubmit}>
       <div>
         <label htmlFor="name" className="block text-sm font-semibold mb-2 text-gray-700">
-          Họ và tên
+          Họ và tên <span className="text-red-500">*</span>
         </label>
         <input
           type="text"
@@ -57,6 +57,7 @@ export default function ContactForm() {
           name="name"
           className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="Nhập họ và tên của bạn"
+          required
         />
       </div>
 
@@ -75,28 +76,28 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-semibold mb-2 text-gray-700">
-          Email
+        <label htmlFor="area" className="block text-sm font-semibold mb-2 text-gray-700">
+          Khu vực cần thi công
         </label>
         <input
-          type="email"
-          id="email"
-          name="email"
+          type="text"
+          id="area"
+          name="area"
           className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none text-gray-900 placeholder:text-gray-500"
-          placeholder="Nhập email của bạn"
+          placeholder="Ví dụ: Quận 1, TP.HCM"
         />
       </div>
 
       <div>
         <label htmlFor="message" className="block text-sm font-semibold mb-2 text-gray-700">
-          Nội dung
+          Nội dung thêm
         </label>
         <textarea
           id="message"
           name="message"
           rows={5}
           className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none resize-none text-gray-900 placeholder:text-gray-500"
-          placeholder="Nhập nội dung tin nhắn của bạn..."
+          placeholder="Mô tả chi tiết về công việc cần thi công..."
         />
       </div>
 

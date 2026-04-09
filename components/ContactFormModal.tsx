@@ -12,7 +12,7 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    email: '',
+    area: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,7 +34,7 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
 
       if (response.ok) {
         setSubmitStatus('success');
-        setFormData({ name: '', phone: '', email: '', message: '' });
+        setFormData({ name: '', phone: '', area: '', message: '' });
         setTimeout(() => {
           onClose();
           setSubmitStatus('idle');
@@ -68,11 +68,12 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-              Họ và tên
+              Họ và tên <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
               id="name"
+              required
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-gray-900 placeholder:text-gray-500"
@@ -96,22 +97,22 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
           </div>
 
           <div>
-            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
-              Email
+            <label htmlFor="area" className="block text-sm font-semibold text-gray-700 mb-2">
+              Khu vực cần thi công
             </label>
             <input
-              type="email"
-              id="email"
-              value={formData.email}
-              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              type="text"
+              id="area"
+              value={formData.area}
+              onChange={(e) => setFormData({ ...formData, area: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-gray-900 placeholder:text-gray-500"
-              placeholder="Nhập email của bạn"
+              placeholder="Ví dụ: Quận 1, TP.HCM"
             />
           </div>
 
           <div>
             <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
-              Nội dung
+              Nội dung thêm
             </label>
             <textarea
               id="message"
@@ -119,7 +120,7 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all resize-none text-gray-900 placeholder:text-gray-500"
-              placeholder="Nhập nội dung tin nhắn của bạn..."
+              placeholder="Mô tả chi tiết về công việc cần thi công..."
             />
           </div>
 

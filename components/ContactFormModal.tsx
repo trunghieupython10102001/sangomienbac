@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { X } from 'lucide-react';
 
 interface ContactFormModalProps {
@@ -12,42 +12,99 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
-    address: '',
-    area: '',
-    note: ''
+    email: '',
+    message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [hasAutoSubmitted, setHasAutoSubmitted] = useState(false);
+  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+  const submittedPhonesRef = useRef<Set<string>>(new Set());
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const isValidPhone = (phone: string) => {
+    return phone.length >= 10 && /^[0-9]+$/.test(phone);
+  };
+
+  const submitForm = useCallback(async (data: typeof formData, isAuto = false) => {
+    if (!data.phone || !isValidPhone(data.phone)) return;
+    
+    if (submittedPhonesRef.current.has(data.phone)) {
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('/api/submit-contact', {
+      const response = await fetch('/api/send-contact-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', phone: '', address: '', area: '', note: '' });
-        setTimeout(() => {
+        submittedPhonesRef.current.add(data.phone);
+        if (!isAuto) {
+          setSubmitStatus('success');
+        }
+        if (isAuto) {
+          setHasAutoSubmitted(true);
+        }
+        setFormData({ name: '', phone: '', email: '', message: '' });
+        if (!isAuto) {
+          setTimeout(() => {
+            onClose();
+            setSubmitStatus('idle');
+            setHasAutoSubmitted(false);
+          }, 2000);
+        } else {
           onClose();
-          setSubmitStatus('idle');
-        }, 2000);
+          setHasAutoSubmitted(false);
+        }
       } else {
-        setSubmitStatus('error');
+        if (!isAuto) {
+          setSubmitStatus('error');
+        }
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      setSubmitStatus('error');
+      if (!isAuto) {
+        setSubmitStatus('error');
+      }
     } finally {
       setIsSubmitting(false);
+    }
+  }, [onClose]);
+
+  useEffect(() => {
+    if (debounceTimerRef.current) {
+      clearTimeout(debounceTimerRef.current);
+    }
+
+    if (formData.phone && isValidPhone(formData.phone) && !hasAutoSubmitted && isOpen) {
+      debounceTimerRef.current = setTimeout(() => {
+        submitForm(formData, true);
+      }, 3000);
+    }
+
+    return () => {
+      if (debounceTimerRef.current) {
+        clearTimeout(debounceTimerRef.current);
+      }
+    };
+  }, [formData, hasAutoSubmitted, isOpen, submitForm]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await submitForm(formData, false);
+  };
+
+  const handleInputChange = (field: keyof typeof formData, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+    if (field === 'phone') {
+      setHasAutoSubmitted(false);
     }
   };
 
@@ -69,15 +126,14 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div>
             <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-2">
-              Họ và tên <span className="text-red-500">*</span>
+              Họ và tên
             </label>
             <input
               type="text"
               id="name"
-              required
               value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+              onChange={(e) => handleInputChange('name', e.target.value)}
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-gray-900 placeholder:text-gray-500"
               placeholder="Nhập họ và tên"
             />
           </div>
@@ -91,53 +147,37 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
               id="phone"
               required
               value={formData.phone}
-              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
+              onChange={(e) => handleInputChange('phone', e.target.value)}
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-gray-900 placeholder:text-gray-500"
               placeholder="Nhập số điện thoại"
             />
           </div>
 
           <div>
-            <label htmlFor="address" className="block text-sm font-semibold text-gray-700 mb-2">
-              Địa chỉ thi công <span className="text-red-500">*</span>
+            <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+              Email
             </label>
             <input
-              type="text"
-              id="address"
-              required
-              value={formData.address}
-              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
-              placeholder="Nhập địa chỉ thi công"
+              type="email"
+              id="email"
+              value={formData.email}
+              onChange={(e) => handleInputChange('email', e.target.value)}
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-gray-900 placeholder:text-gray-500"
+              placeholder="Nhập email của bạn"
             />
           </div>
 
           <div>
-            <label htmlFor="area" className="block text-sm font-semibold text-gray-700 mb-2">
-              Diện tích (m²) <span className="text-red-500">*</span>
-            </label>
-            <input
-              type="number"
-              id="area"
-              required
-              value={formData.area}
-              onChange={(e) => setFormData({ ...formData, area: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all"
-              placeholder="Nhập diện tích"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="note" className="block text-sm font-semibold text-gray-700 mb-2">
-              Ghi chú
+            <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
+              Nội dung
             </label>
             <textarea
-              id="note"
+              id="message"
               rows={3}
-              value={formData.note}
-              onChange={(e) => setFormData({ ...formData, note: e.target.value })}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent outline-none transition-all resize-none"
-              placeholder="Ghi chú thêm (nếu có)"
+              value={formData.message}
+              onChange={(e) => handleInputChange('message', e.target.value)}
+              className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all resize-none text-gray-900 placeholder:text-gray-500"
+              placeholder="Nhập nội dung tin nhắn của bạn..."
             />
           </div>
 

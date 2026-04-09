@@ -1,4 +1,5 @@
 import { Phone, Mail, MapPin, Clock, Send, MessageSquare } from "lucide-react";
+import ContactForm from "./ContactForm";
 
 export default function ContactPage() {
   return (
@@ -95,69 +96,7 @@ export default function ContactPage() {
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold text-gray-900">Gửi tin nhắn</h2>
               </div>
-              <form className="space-y-5">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-semibold mb-2 text-gray-700">
-                    Họ và tên <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none"
-                    placeholder="Nhập họ và tên của bạn"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-semibold mb-2 text-gray-700">
-                    Số điện thoại <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none"
-                    placeholder="Nhập số điện thoại"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="email" className="block text-sm font-semibold mb-2 text-gray-700">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none"
-                    placeholder="Nhập email của bạn"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-semibold mb-2 text-gray-700">
-                    Nội dung <span className="text-red-500">*</span>
-                  </label>
-                  <textarea
-                    id="message"
-                    rows={5}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none resize-none"
-                    placeholder="Nhập nội dung tin nhắn của bạn..."
-                    required
-                  />
-                </div>
-
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-6 py-4 rounded-xl font-bold text-lg transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center justify-center gap-2"
-                >
-                  <Send className="w-5 h-5" />
-                  Gửi tin nhắn
-                </button>
-                <p className="text-sm text-gray-500 text-center">
-                  Chúng tôi sẽ phản hồi trong vòng 24 giờ
-                </p>
-              </form>
+              <ContactForm />
             </div>
           </div>
         </div>

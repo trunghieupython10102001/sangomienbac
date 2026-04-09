@@ -1,34 +1,24 @@
 'use client';
 
-import { useState, FormEvent, useEffect, useRef, useCallback } from 'react';
+import { useState, FormEvent } from 'react';
 import { Send } from 'lucide-react';
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    message: '',
-  });
-  const [hasAutoSubmitted, setHasAutoSubmitted] = useState(false);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const submittedPhonesRef = useRef<Set<string>>(new Set());
 
-  const isValidPhone = (phone: string) => {
-    return phone.length >= 10 && /^[0-9]+$/.test(phone);
-  };
-
-  const submitForm = useCallback(async (data: typeof formData, isAuto = false) => {
-    if (!data.phone || !isValidPhone(data.phone)) return;
-    
-    if (submittedPhonesRef.current.has(data.phone)) {
-      return;
-    }
-
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     setIsSubmitting(true);
     setMessage(null);
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name') as string,
+      phone: formData.get('phone') as string,
+      email: formData.get('email') as string,
+      message: formData.get('message') as string,
+    };
 
     try {
       const response = await fetch('/api/send-contact-email', {
@@ -42,58 +32,16 @@ export default function ContactForm() {
       const result = await response.json();
 
       if (response.ok) {
-        submittedPhonesRef.current.add(data.phone);
-        if (!isAuto) {
-          setMessage({ 
-            type: 'success', 
-            text: 'Gửi tin nhắn thành công! Chúng tôi sẽ liên hệ lại sớm.' 
-          });
-        }
-        if (isAuto) {
-          setHasAutoSubmitted(true);
-        }
+        setMessage({ type: 'success', text: 'Gửi tin nhắn thành công! Chúng tôi sẽ liên hệ lại sớm.' });
+        (e.target as HTMLFormElement).reset();
       } else {
-        if (!isAuto) {
-          setMessage({ type: 'error', text: result.error || 'Có lỗi xảy ra. Vui lòng thử lại.' });
-        }
+        setMessage({ type: 'error', text: result.error || 'Có lỗi xảy ra. Vui lòng thử lại.' });
       }
     } catch (error) {
       console.error('Error:', error);
-      if (!isAuto) {
-        setMessage({ type: 'error', text: 'Không thể gửi tin nhắn. Vui lòng thử lại sau.' });
-      }
+      setMessage({ type: 'error', text: 'Không thể gửi tin nhắn. Vui lòng thử lại sau.' });
     } finally {
       setIsSubmitting(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
-
-    if (formData.phone && isValidPhone(formData.phone) && !hasAutoSubmitted) {
-      debounceTimerRef.current = setTimeout(() => {
-        submitForm(formData, true);
-      }, 3000);
-    }
-
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-    };
-  }, [formData, hasAutoSubmitted, submitForm]);
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await submitForm(formData, false);
-  };
-
-  const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    if (field === 'phone') {
-      setHasAutoSubmitted(false);
     }
   };
 
@@ -107,8 +55,6 @@ export default function ContactForm() {
           type="text"
           id="name"
           name="name"
-          value={formData.name}
-          onChange={(e) => handleInputChange('name', e.target.value)}
           className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="Nhập họ và tên của bạn"
         />
@@ -122,8 +68,6 @@ export default function ContactForm() {
           type="tel"
           id="phone"
           name="phone"
-          value={formData.phone}
-          onChange={(e) => handleInputChange('phone', e.target.value)}
           className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="Nhập số điện thoại"
           required
@@ -138,8 +82,6 @@ export default function ContactForm() {
           type="email"
           id="email"
           name="email"
-          value={formData.email}
-          onChange={(e) => handleInputChange('email', e.target.value)}
           className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none text-gray-900 placeholder:text-gray-500"
           placeholder="Nhập email của bạn"
         />
@@ -153,8 +95,6 @@ export default function ContactForm() {
           id="message"
           name="message"
           rows={5}
-          value={formData.message}
-          onChange={(e) => handleInputChange('message', e.target.value)}
           className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none resize-none text-gray-900 placeholder:text-gray-500"
           placeholder="Nhập nội dung tin nhắn của bạn..."
         />

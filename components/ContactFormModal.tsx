@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState } from 'react';
 import { X } from 'lucide-react';
 
 interface ContactFormModalProps {
@@ -17,21 +17,9 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-  const [hasAutoSubmitted, setHasAutoSubmitted] = useState(false);
-  const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
-  const submittedPhonesRef = useRef<Set<string>>(new Set());
 
-  const isValidPhone = (phone: string) => {
-    return phone.length >= 10 && /^[0-9]+$/.test(phone);
-  };
-
-  const submitForm = useCallback(async (data: typeof formData, isAuto = false) => {
-    if (!data.phone || !isValidPhone(data.phone)) return;
-    
-    if (submittedPhonesRef.current.has(data.phone)) {
-      return;
-    }
-
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
@@ -41,70 +29,24 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        submittedPhonesRef.current.add(data.phone);
-        if (!isAuto) {
-          setSubmitStatus('success');
-        }
-        if (isAuto) {
-          setHasAutoSubmitted(true);
-        }
+        setSubmitStatus('success');
         setFormData({ name: '', phone: '', email: '', message: '' });
-        if (!isAuto) {
-          setTimeout(() => {
-            onClose();
-            setSubmitStatus('idle');
-            setHasAutoSubmitted(false);
-          }, 2000);
-        } else {
+        setTimeout(() => {
           onClose();
-          setHasAutoSubmitted(false);
-        }
+          setSubmitStatus('idle');
+        }, 2000);
       } else {
-        if (!isAuto) {
-          setSubmitStatus('error');
-        }
+        setSubmitStatus('error');
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      if (!isAuto) {
-        setSubmitStatus('error');
-      }
+      setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
-    }
-  }, [onClose]);
-
-  useEffect(() => {
-    if (debounceTimerRef.current) {
-      clearTimeout(debounceTimerRef.current);
-    }
-
-    if (formData.phone && isValidPhone(formData.phone) && !hasAutoSubmitted && isOpen) {
-      debounceTimerRef.current = setTimeout(() => {
-        submitForm(formData, true);
-      }, 3000);
-    }
-
-    return () => {
-      if (debounceTimerRef.current) {
-        clearTimeout(debounceTimerRef.current);
-      }
-    };
-  }, [formData, hasAutoSubmitted, isOpen, submitForm]);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    await submitForm(formData, false);
-  };
-
-  const handleInputChange = (field: keyof typeof formData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-    if (field === 'phone') {
-      setHasAutoSubmitted(false);
     }
   };
 
@@ -132,7 +74,7 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
               type="text"
               id="name"
               value={formData.name}
-              onChange={(e) => handleInputChange('name', e.target.value)}
+              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-gray-900 placeholder:text-gray-500"
               placeholder="Nhập họ và tên"
             />
@@ -147,7 +89,7 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
               id="phone"
               required
               value={formData.phone}
-              onChange={(e) => handleInputChange('phone', e.target.value)}
+              onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-gray-900 placeholder:text-gray-500"
               placeholder="Nhập số điện thoại"
             />
@@ -161,7 +103,7 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
               type="email"
               id="email"
               value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
+              onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-gray-900 placeholder:text-gray-500"
               placeholder="Nhập email của bạn"
             />
@@ -175,7 +117,7 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
               id="message"
               rows={3}
               value={formData.message}
-              onChange={(e) => handleInputChange('message', e.target.value)}
+              onChange={(e) => setFormData({ ...formData, message: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all resize-none text-gray-900 placeholder:text-gray-500"
               placeholder="Nhập nội dung tin nhắn của bạn..."
             />

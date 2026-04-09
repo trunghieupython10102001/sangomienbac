@@ -106,7 +106,7 @@ export default function ContactFormModal({ isOpen, onClose }: ContactFormModalPr
               value={formData.area}
               onChange={(e) => setFormData({ ...formData, area: e.target.value })}
               className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none transition-all text-gray-900 placeholder:text-gray-500"
-              placeholder="Ví dụ: Quận 1, TP.HCM"
+              placeholder="Ví dụ: Hoàn Kiếm, Hà Nội"
             />
           </div>
 

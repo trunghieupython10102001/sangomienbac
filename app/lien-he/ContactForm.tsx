@@ -84,7 +84,7 @@ export default function ContactForm() {
           id="area"
           name="area"
           className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all outline-none text-gray-900 placeholder:text-gray-500"
-          placeholder="Ví dụ: Quận 1, TP.HCM"
+          placeholder="Ví dụ: Hoàn Kiếm, Hà Nội"
         />
       </div>
 

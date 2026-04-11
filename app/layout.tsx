@@ -64,11 +64,20 @@ export default function RootLayout({
         </Script>
         <Script id="google-conversion" strategy="afterInteractive">
           {`
-            gtag('event', 'conversion', {
-              'send_to': 'AW-18067397087/COpHCIy4jZkcEN-zmqdD',
-              'value': 1.0,
-              'currency': 'VND'
-            });
+            function gtag_report_conversion(url) {
+              var callback = function () {
+                if (typeof(url) != 'undefined') {
+                  window.location = url;
+                }
+              };
+              gtag('event', 'conversion', {
+                'send_to': 'AW-18067397087/COpHCIy4jZkcEN-zmqdD',
+                'value': 1.0,
+                'currency': 'VND',
+                'event_callback': callback
+              });
+              return false;
+            }
           `}
         </Script>
         <Header />

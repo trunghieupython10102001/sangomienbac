@@ -89,6 +89,32 @@ export const categories: Category[] = [
   },
   {
     id: '3',
+    name: 'Sàn Nhựa 4mm SPC Cao Cấp',
+    slug: 'san-nhua-4mm-spc-cao-cap',
+    description: 'Xuất xứ Việt Nam • Kích thước: 915×153×4mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa • Chống trầy xước, chống mài mòn cao • Vân gỗ tự nhiên • Bảo hành 10 năm',
+    shortDescription: 'Sàn nhựa SPC dày 4mm, giá tốt, chất lượng ổn định',
+    image: '/products/Sàn nhựa 4mm SPC cao cấp/B418.jpg',
+    originalPrice: '350.000đ/m²',
+    discountedPrice: '200.000đ/m²',
+    colorCount: 12,
+    colors: [
+      '/products/Sàn nhựa 4mm SPC cao cấp/B418.jpg',
+      '/products/Sàn nhựa 4mm SPC cao cấp/B428.jpg',
+      '/products/Sàn nhựa 4mm SPC cao cấp/B438.jpg',
+      '/products/Sàn nhựa 4mm SPC cao cấp/B458.jpg'
+    ],
+    specifications: {
+      origin: 'Việt Nam',
+      size: '915 × 153 × 4mm',
+      thickness: '4mm',
+      waterproof: 'Bảo hành ngập nước 2 năm',
+      installation: 'Hèm khóa',
+      surface: ['Chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
+      warranty: '10 năm về ẩm mốc, mối mọt'
+    }
+  },
+  {
+    id: '4',
     name: 'Sàn Gỗ Cốt Xanh Malaysia Cao Cấp',
     slug: 'san-go-cot-xanh',
     description: 'Xuất xứ Việt Nam • Kích thước: 1221×168×12mm • Chống ẩm, chống mối mọt, chịu nước 24H • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 15 năm',
@@ -114,7 +140,7 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '4',
+    id: '5',
     name: 'Sàn Gỗ Cao Cấp Malaysia',
     slug: 'san-go-cao-cap-malaysia',
     description: 'Xuất xứ Malaysia • Kích thước: 1219×168×12mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa 5G Thụy Điển • Tiêu chuẩn AC4 chống trầy xước • Bảo hành 20 năm',
@@ -151,7 +177,7 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '5',
+    id: '6',
     name: 'Sàn Gỗ Cốt Đen Nhập Khẩu',
     slug: 'san-go-cot-den-cao-cap',
     description: 'Xuất xứ Indonesia • Kích thước: 1221×168×12mm • Chống nước: Bảo hành ngập nước 1 năm • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 20 năm',
@@ -177,7 +203,7 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '6',
+    id: '7',
     name: 'Sàn Gỗ Cốt Đen Việt Nam',
     slug: 'san-go-cot-den-viet-nam',
     description: 'Xuất xứ Việt Nam • Kích thước: 1221×168×12mm • Chống ẩm, chống mối mọt, chịu nước 48H • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 15 năm',
@@ -203,7 +229,7 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '7',
+    id: '8',
     name: 'Sàn Gỗ Công Nghệ Đức',
     slug: 'san-go-cong-nghe-duc',
     description: 'Xuất xứ CHLB Đức • Kích thước: 1219×168×12mm / 604×130×12mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa 5G Thụy Điển • Tiêu chuẩn AC4 • Bảo hành 20 năm',
@@ -229,7 +255,7 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '8',
+    id: '9',
     name: 'Sàn Gỗ Châu Âu',
     slug: 'san-go-chau-au',
     description: 'Xuất xứ Thổ Nhĩ Kỳ • Kích thước: 1195×189×12mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 20 năm',
@@ -252,32 +278,6 @@ export const categories: Category[] = [
       installation: 'Hèm khóa',
       surface: ['Tiêu chuẩn AC4 chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
       warranty: '20 năm về cong vênh, mối mọt'
-    }
-  },
-  {
-    id: '9',
-    name: 'Sàn Nhựa 4mm SPC Cao Cấp',
-    slug: 'san-nhua-4mm-spc-cao-cap',
-    description: 'Xuất xứ Việt Nam • Kích thước: 915×153×4mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa • Chống trầy xước, chống mài mòn cao • Vân gỗ tự nhiên • Bảo hành 10 năm',
-    shortDescription: 'Sàn nhựa SPC dày 4mm, giá tốt, chất lượng ổn định',
-    image: '/products/Sàn nhựa 4mm SPC cao cấp/B418.jpg',
-    originalPrice: '350.000đ/m²',
-    discountedPrice: '285.000đ/m²',
-    colorCount: 12,
-    colors: [
-      '/products/Sàn nhựa 4mm SPC cao cấp/B418.jpg',
-      '/products/Sàn nhựa 4mm SPC cao cấp/B428.jpg',
-      '/products/Sàn nhựa 4mm SPC cao cấp/B438.jpg',
-      '/products/Sàn nhựa 4mm SPC cao cấp/B458.jpg'
-    ],
-    specifications: {
-      origin: 'Việt Nam',
-      size: '915 × 153 × 4mm',
-      thickness: '4mm',
-      waterproof: 'Bảo hành ngập nước 2 năm',
-      installation: 'Hèm khóa',
-      surface: ['Chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
-      warranty: '10 năm về ẩm mốc, mối mọt'
     }
   },
   {

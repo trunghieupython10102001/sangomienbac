@@ -121,27 +121,27 @@ export default function Header() {
         {isMenuOpen && (
           <ul className="md:hidden mt-4 space-y-1 pb-4">
             <li>
-              <Link href="/" className="block px-4 py-3 rounded-lg hover:bg-amber-50 hover:text-amber-600 transition-all">
+              <Link href="/" className="block px-4 py-3 rounded-lg font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-all">
                 Trang chủ
               </Link>
             </li>
             <li>
-              <Link href="/gioi-thieu" className="block px-4 py-3 rounded-lg hover:bg-amber-50 hover:text-amber-600 transition-all">
+              <Link href="/gioi-thieu" className="block px-4 py-3 rounded-lg font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-all">
                 Giới thiệu
               </Link>
             </li>
             <li>
-              <Link href="/san-pham" className="block px-4 py-3 rounded-lg hover:bg-amber-50 hover:text-amber-600 transition-all">
+              <Link href="/san-pham" className="block px-4 py-3 rounded-lg font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-all">
                 Sản phẩm
               </Link>
             </li>
             <li>
-              <Link href="/video-hinh-anh" className="block px-4 py-3 rounded-lg hover:bg-amber-50 hover:text-amber-600 transition-all">
+              <Link href="/video-hinh-anh" className="block px-4 py-3 rounded-lg font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-all">
                 Video & Hình ảnh
               </Link>
             </li>
             <li>
-              <Link href="/tin-tuc" className="block px-4 py-3 rounded-lg hover:bg-amber-50 hover:text-amber-600 transition-all">
+              <Link href="/tin-tuc" className="block px-4 py-3 rounded-lg font-medium text-gray-800 hover:bg-amber-50 hover:text-amber-600 transition-all">
                 Tin tức
               </Link>
             </li>

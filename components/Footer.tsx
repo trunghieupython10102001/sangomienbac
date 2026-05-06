@@ -56,6 +56,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/tin-tuc" className="text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2 group">
+                  <span className="w-1.5 h-1.5 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                  Tin tức
+                </Link>
+              </li>
+              <li>
                 <Link href="/bao-gia" className="text-gray-400 hover:text-amber-500 transition-colors flex items-center gap-2 group">
                   <span className="w-1.5 h-1.5 bg-amber-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></span>
                   Báo giá

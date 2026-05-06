@@ -1,0 +1,105 @@
+# Hướng dẫn tạo AWS Free Tier
+
+## Bước 1: Tạo tài khoản AWS
+
+1. Truy cập: https://aws.amazon.com/free
+2. Click "Create a Free Account"
+3. Điền thông tin:
+   - Email: Email của bạn
+   - AWS account name: Tên tài khoản (ví dụ: sangomienbac)
+4. Xác nhận email → Nhập mã verification
+
+## Bước 2: Thông tin cá nhân
+
+1. Chọn Personal account
+2. Điền:
+   - Full name: Họ tên
+   - Phone number: Số điện thoại (+84...)
+   - Country: Vietnam
+   - Address: Địa chỉ của bạn
+   - City: Thành phố
+   - Postal code: Mã bưu điện (ví dụ: 100000 cho Hà Nội)
+
+## Bước 3: Thông tin thanh toán (BẮT BUỘC)
+
+⚠️ Cần thẻ Visa/Mastercard - AWS sẽ trừ $1 để verify, sau đó hoàn lại.
+
+1. Nhập thông tin thẻ:
+   - Card number
+   - Expiration date
+   - CVV
+   - Cardholder name
+2. Billing address (có thể giống địa chỉ trên)
+
+## Bước 4: Xác minh danh tính
+
+1. Nhập số điện thoại
+2. Chọn Text message (SMS) hoặc Voice call
+3. Nhập mã xác minh
+
+## Bước 5: Chọn Support Plan
+
+1. Chọn Basic Support - Free ✅
+2. Click Complete sign up
+
+---
+
+## Sau khi tạo xong - Setup EC2 & S3
+
+### A. Tạo S3 Bucket (lưu ảnh)
+
+1. Vào AWS Console → Search "S3"
+2. Click "Create bucket"
+3. Cấu hình:
+   - Bucket name: sangomienbac-assets (phải unique toàn cầu)
+   - Region: ap-southeast-1 (Singapore - gần VN)
+   - Block Public Access: Bỏ tick để cho phép public access
+   - Tick xác nhận bạn hiểu về public access
+4. Click Create bucket
+
+5. Cấu hình public access cho bucket:
+   - Vào bucket → Permissions → Bucket Policy
+   - Thêm policy:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PublicReadGetObject",
+      "Effect": "Allow",
+      "Principal": "*",
+      "Action": "s3:GetObject",
+      "Resource": "arn:aws:s3:::sangomienbac-assets/*"
+    }
+  ]
+}
+
+### B. Tạo EC2 Instance (nếu cần server)
+
+1. Vào AWS Console → Search "EC2"
+2. Click "Launch Instance"
+3. Cấu hình:
+   - Name: sangomienbac-server
+   - AMI: Amazon Linux 2023 (Free tier eligible)
+   - Instance type: t2.micro (Free tier) ✅
+   - Key pair: Create new → Download .pem file (quan trọng!)
+   - Network: Allow SSH, HTTP, HTTPS
+4. Click Launch instance
+
+---
+
+## Free Tier Limits (12 tháng đầu)
+
+| Service        | Free Limit                          |
+|----------------|-------------------------------------|
+| EC2            | 750 giờ/tháng (t2.micro)            |
+| S3             | 5GB storage, 20,000 GET, 2,000 PUT  |
+| Data Transfer  | 100GB/tháng ra internet             |
+
+---
+
+## Gợi ý cho website sangomienbac.vn
+
+1. S3 - Lưu tất cả ảnh sản phẩm (thay vì để trong public/)
+2. CloudFront (CDN miễn phí 1TB/tháng) - Tăng tốc load ảnh
+3. Cloudflare Pages hoặc Vercel - Host Next.js app (miễn phí)

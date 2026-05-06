@@ -106,6 +106,11 @@ export default function Header() {
               </Link>
             </li>
             <li>
+              <Link href="/tin-tuc" className="px-4 py-2 rounded-lg font-medium text-gray-700 hover:text-amber-600 hover:bg-amber-50 transition-all">
+                Tin tức
+              </Link>
+            </li>
+            <li>
               <Link href="/lien-he" className="px-4 py-2 rounded-lg bg-amber-600 text-white hover:bg-amber-700 transition-all shadow-md">
                 Liên hệ
               </Link>
@@ -133,6 +138,11 @@ export default function Header() {
             <li>
               <Link href="/video-hinh-anh" className="block px-4 py-3 rounded-lg hover:bg-amber-50 hover:text-amber-600 transition-all">
                 Video & Hình ảnh
+              </Link>
+            </li>
+            <li>
+              <Link href="/tin-tuc" className="block px-4 py-3 rounded-lg hover:bg-amber-50 hover:text-amber-600 transition-all">
+                Tin tức
               </Link>
             </li>
             <li>

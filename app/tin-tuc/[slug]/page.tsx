@@ -1,6 +1,7 @@
 import { newsArticles } from "@/lib/news";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Calendar, ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 
@@ -52,6 +53,19 @@ export default async function NewsDetailPage({ params }: PageProps) {
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
             {article.title}
           </h1>
+
+          {article.images.length > 0 && (
+            <div className="relative w-full h-64 md:h-96 rounded-2xl overflow-hidden mb-8">
+              <Image
+                src={article.images[0]}
+                alt={article.title}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 800px"
+                priority
+              />
+            </div>
+          )}
 
           <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-strong:text-gray-900 prose-li:text-gray-700">
             {article.content.split("\n").map((paragraph, index) => {
@@ -152,6 +166,22 @@ export default async function NewsDetailPage({ params }: PageProps) {
               );
             })}
           </div>
+
+          {article.images.length > 1 && (
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {article.images.slice(1).map((img, idx) => (
+                <div key={idx} className="relative h-56 rounded-xl overflow-hidden">
+                  <Image
+                    src={img}
+                    alt={`${article.title} - Hình ${idx + 2}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 100vw, 400px"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
 
           <div className="mt-12 pt-8 border-t border-gray-200">
             <Link

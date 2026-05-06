@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { newsArticles } from "@/lib/news";
 import { Calendar, ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
@@ -32,6 +33,15 @@ export default function TinTucPage() {
                 href={`/tin-tuc/${article.slug}`}
                 className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-amber-200"
               >
+                <div className="relative h-48 w-full overflow-hidden">
+                  <Image
+                    src={article.thumbnail}
+                    alt={article.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
                 <div className="p-6">
                   <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
                     <Calendar className="w-4 h-4" />

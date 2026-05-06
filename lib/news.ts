@@ -5,6 +5,8 @@ export interface NewsArticle {
   excerpt: string;
   content: string;
   date: string;
+  thumbnail: string;
+  images: string[];
 }
 
 export const newsArticles: NewsArticle[] = [
@@ -14,6 +16,8 @@ export const newsArticles: NewsArticle[] = [
     slug: "nen-dung-san-go-hay-san-nhua",
     excerpt: "Sàn nhựa hay sàn gỗ công nghiệp? Phân tích chi tiết điểm tương đồng và khác biệt giữa 2 dòng sàn giúp bạn tìm ra loại sàn phù hợp nhất.",
     date: "2026-05-01",
+    thumbnail: "/news/news-image-1.png",
+    images: ["/news/news-image-1.png"],
     content: `Sàn nhựa (hay nói chính xác hơn là sàn nhựa giả gỗ) là loại sàn được làm chủ yếu từ chất liệu nhựa PVC nguyên sinh, kết hợp thêm bột đá và một số chất phụ gia khác. Trong khi đó, sàn gỗ (sàn gỗ công nghiệp) là kết quả của công nghệ ép nén cao bột gỗ tự nhiên để tạo thành.
 
 Khi lựa chọn nên dùng sàn nhựa hay sàn gỗ công nghiệp, điểm khác biệt lớn nhất giữa hai loại vật liệu này đó là chất liệu. Từ đó, mỗi loại sàn sẽ có những ưu nhược điểm riêng. Với những đặc điểm nhất định, người dùng hiện nay vô cùng phân vân không biết nên dùng sàn nhựa hay sàn gỗ công nghiệp cho gia đình của mình. Bài viết dưới đây sẽ phân tích chi tiết điểm tương đồng và khác biệt giữa 2 dòng sàn. Từ đó giúp bạn tìm ra loại sàn phù hợp nhất cho từng khu vực trong nhà.
@@ -52,6 +56,8 @@ Có thể nói, để đánh giá một sản phẩm tốt chúng ta cần phả
     slug: "top-5-mau-san-go-hot-nhat-2026",
     excerpt: "Khám phá 5 màu sàn gỗ đang được ưa chuộng nhất năm 2026, từ vàng sồi kinh điển đến ghi xám hiện đại.",
     date: "2026-04-25",
+    thumbnail: "/news/news-image-2.png",
+    images: ["/news/news-image-2.png", "/news/news-image-3.png", "/news/news-image-4.png", "/news/news-image-5.png", "/news/news-image-6.png"],
     content: `## 1. Màu sàn gỗ ảnh hưởng như thế nào đến không gian?
 
 Màu sàn gỗ đóng vai trò quan trọng trong việc định hình tổng thể không gian nội thất. Dựa trên tông màu của sàn, các yếu tố như tường, trần và đồ nội thất sẽ được phối hợp sao cho đồng bộ và cân đối. Vì vậy, lựa chọn màu sàn gỗ phù hợp ngay từ đầu không chỉ giúp không gian hài hòa hơn mà còn hạn chế phát sinh chi phí điều chỉnh, thay đổi trong quá trình sử dụng về sau.
@@ -84,6 +90,8 @@ Màu sàn gỗ đóng vai trò quan trọng trong việc định hình tổng th
     slug: "lat-san-go-xuong-ca-trao-luu-chi-phi",
     excerpt: "Sàn gỗ xương cá đang trở thành xu hướng nổi bật trong thiết kế nội thất hiện đại. Tìm hiểu lý do và chi phí thực tế.",
     date: "2026-04-20",
+    thumbnail: "/news/news-image-7.png",
+    images: ["/news/news-image-7.png"],
     content: `Sàn gỗ xương cá đang trở thành xu hướng nổi bật trong thiết kế nội thất hiện đại. Không chỉ mang lại sự tinh tế, thẩm mỹ cao, dòng sàn này còn thể hiện phong cách sống sang trọng và đẳng cấp của gia chủ.
 
 ## Phong cách thiết kế của sàn gỗ xương cá
@@ -113,6 +121,8 @@ Kiểu lát xương cá (Herringbone) xuất hiện từ lâu trong kiến trúc
     slug: "loai-san-nao-chong-nuoc-tot",
     excerpt: "Tìm hiểu về sàn nhựa SPC chống nước 100% và sàn gỗ hèm khóa 5G DRY siêu chịu nước - hai lựa chọn hàng đầu cho không gian ẩm ướt.",
     date: "2026-04-15",
+    thumbnail: "/news/news-image-8.png",
+    images: ["/news/news-image-8.png", "/news/news-image-9.png", "/news/news-image-10.png"],
     content: `## Sàn nhựa giả gỗ chống thấm nước SPC
 
 Sàn nhựa giả gỗ SPC là một trong những lựa chọn thay thế sàn gỗ công nghiệp yêu thích của nhiều khách hàng. Nó có đa dạng kiểu dáng, phong cách thiết kế, phù hợp với mọi nội thất, màu sắc đang được săn lùng của gỗ tự nhiên đắt tiền. Ván sàn nhựa giá rẻ cao cấp đại diện cho thiết kế chất lượng, độ bền cao, màu sắc, kết cấu đẹp mắt và đặc biệt hơn hết sàn nhựa chống nước 100%.
@@ -143,6 +153,8 @@ Sàn gỗ công nghiệp là lựa chọn sàn gỗ phổ biến nhất trên th
     slug: "loai-san-nao-chong-moi-mot-chong-am-tot",
     excerpt: "Tìm hiểu các loại sàn gỗ công nghiệp có khả năng chống mối mọt tốt nhất từ Malaysia, Thái Lan và Việt Nam.",
     date: "2026-04-10",
+    thumbnail: "/news/news-image-11.png",
+    images: ["/news/news-image-11.png", "/news/news-image-12.png"],
     content: `Vấn đề mối mọt với đồ gỗ nói chung và sàn gỗ công nghiệp nói riêng đang làm đau đầu biết bao người. Cho nên điều quan tâm rất lớn đối với người mua sàn gỗ là tìm hiểu loại nào có khả năng chịu mối mọt tốt.
 
 ## Những đặc điểm chung của sàn gỗ công nghiệp

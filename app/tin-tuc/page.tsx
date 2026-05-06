@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { newsArticles } from "@/lib/news";
-import { Calendar, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -43,10 +43,6 @@ export default function TinTucPage() {
                   />
                 </div>
                 <div className="p-6">
-                  <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
-                    <Calendar className="w-4 h-4" />
-                    <span>{new Date(article.date).toLocaleDateString("vi-VN")}</span>
-                  </div>
                   <h2 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-amber-600 transition-colors line-clamp-2">
                     {article.title}
                   </h2>

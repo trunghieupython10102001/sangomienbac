@@ -2,7 +2,7 @@ import { newsArticles } from "@/lib/news";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
-import { Calendar, ArrowLeft } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import type { Metadata } from "next";
 
 interface PageProps {
@@ -44,11 +44,6 @@ export default async function NewsDetailPage({ params }: PageProps) {
             <ArrowLeft className="w-4 h-4" />
             Quay lại Tin tức
           </Link>
-
-          <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-            <Calendar className="w-4 h-4" />
-            <span>{new Date(article.date).toLocaleDateString("vi-VN")}</span>
-          </div>
 
           <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8">
             {article.title}

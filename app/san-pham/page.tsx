@@ -1,9 +1,12 @@
 import { categories } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
+import BestSellers from "@/components/BestSellers";
 
 export default function ProductsPage() {
   return (
     <div className="min-h-screen">
+      <BestSellers />
+
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">

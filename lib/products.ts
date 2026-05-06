@@ -37,85 +37,7 @@ export interface Category {
 export const categories: Category[] = [
   {
     id: '1',
-    name: 'Sàn Gỗ 8mm Việt Nam',
-    slug: 'san-go-8mm-viet-nam',
-    description: 'Xuất xứ Việt Nam • Kích thước: 1223×146×8mm • Chống ẩm, chống mối mọt • Hèm khóa • Tiêu chuẩn AC chống trầy xước • Vân gỗ tự nhiên • Bảo hành 10 năm',
-    shortDescription: 'Sàn gỗ 8mm Việt Nam, giá tốt, chất lượng ổn định',
-    image: '/products/Sàn gỗ 8mm Việt Nam/IMG_9463.JPG',
-    originalPrice: '250.000đ/m²',
-    discountedPrice: '225.000đ/m²',
-    colorCount: 10,
-    colors: [
-      '/products/Sàn gỗ 8mm Việt Nam/IMG_9463.JPG',
-      '/products/Sàn gỗ 8mm Việt Nam/IMG_9464.JPG',
-      '/products/Sàn gỗ 8mm Việt Nam/IMG_9465.JPG',
-      '/products/Sàn gỗ 8mm Việt Nam/IMG_9466.JPG'
-    ],
-    specifications: {
-      origin: 'Việt Nam',
-      size: '1223 × 146 × 8mm',
-      thickness: '8mm',
-      durability: 'Chống ẩm, chống mối mọt',
-      installation: 'Hèm khóa',
-      surface: ['Tiêu chuẩn AC chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
-      warranty: '10 năm về cong vênh, mối mọt'
-    }
-  },
-  {
-    id: '2',
-    name: 'Sàn Gỗ Việt Nam',
-    slug: 'san-go-cot-nau',
-    description: 'Xuất xứ Việt Nam • Kích thước: 1220×146×12mm • Chống ẩm, chống mối mọt • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 10 năm',
-    shortDescription: 'Sàn gỗ cốt nâu giá tốt, chất lượng ổn định',
-    image: '/products/Sàn gỗ cốt nâu/O13.jpg',
-    originalPrice: '299.000đ/m²',
-    discountedPrice: '250.000đ/m²',
-    colorCount: 14,
-    colors: [
-      '/products/Sàn gỗ cốt nâu/1235.jpg',
-      '/products/Sàn gỗ cốt nâu/1250.jpg',
-      '/products/Sàn gỗ cốt nâu/1260.jpg',
-      '/products/Sàn gỗ cốt nâu/1261.jpg'
-    ],
-    specifications: {
-      origin: 'Việt Nam',
-      size: '1220 × 146 × 12mm',
-      thickness: '12mm',
-      durability: 'Chống ẩm, chống mối mọt',
-      installation: 'Hèm khóa',
-      surface: ['Tiêu chuẩn AC4 chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
-      warranty: '10 năm về cong vênh, mối mọt'
-    }
-  },
-  {
-    id: '3',
-    name: 'Sàn Nhựa 4mm SPC Cao Cấp',
-    slug: 'san-nhua-4mm-spc-cao-cap',
-    description: 'Xuất xứ Việt Nam • Kích thước: 915×153×4mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa • Chống trầy xước, chống mài mòn cao • Vân gỗ tự nhiên • Bảo hành 10 năm',
-    shortDescription: 'Sàn nhựa SPC dày 4mm, giá tốt, chất lượng ổn định',
-    image: '/products/Sàn nhựa 4mm SPC cao cấp/B418.jpg',
-    originalPrice: '350.000đ/m²',
-    discountedPrice: '285.000đ/m²',
-    colorCount: 12,
-    colors: [
-      '/products/Sàn nhựa 4mm SPC cao cấp/B418.jpg',
-      '/products/Sàn nhựa 4mm SPC cao cấp/B428.jpg',
-      '/products/Sàn nhựa 4mm SPC cao cấp/B438.jpg',
-      '/products/Sàn nhựa 4mm SPC cao cấp/B458.jpg'
-    ],
-    specifications: {
-      origin: 'Việt Nam',
-      size: '915 × 153 × 4mm',
-      thickness: '4mm',
-      waterproof: 'Bảo hành ngập nước 2 năm',
-      installation: 'Hèm khóa',
-      surface: ['Chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
-      warranty: '10 năm về ẩm mốc, mối mọt'
-    }
-  },
-  {
-    id: '4',
-    name: 'Sàn Gỗ Cốt Xanh Malaysia Cao Cấp',
+    name: 'Sàn Gỗ Cốt Xanh',
     slug: 'san-go-cot-xanh',
     description: 'Xuất xứ Việt Nam • Kích thước: 1221×168×12mm • Chống ẩm, chống mối mọt, chịu nước 24H • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 15 năm',
     shortDescription: 'Sàn gỗ cốt xanh chống ẩm tốt',
@@ -140,7 +62,7 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '5',
+    id: '2',
     name: 'Sàn Gỗ Malaysia Chịu Nước',
     slug: 'san-go-cao-cap-malaysia',
     description: 'Xuất xứ Malaysia • Kích thước: 1219×168×12mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa 5G Thụy Điển • Tiêu chuẩn AC4 chống trầy xước • Bảo hành 20 năm',
@@ -177,7 +99,7 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '6',
+    id: '3',
     name: 'Sàn Gỗ Cốt Đen Chịu Nước',
     slug: 'san-go-cot-den-cao-cap',
     description: 'Xuất xứ Indonesia • Kích thước: 1221×168×12mm • Chống nước: Bảo hành ngập nước 1 năm • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 20 năm',
@@ -203,7 +125,33 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '7',
+    id: '4',
+    name: 'Sàn Gỗ Xương Cá',
+    slug: 'san-go-xuong-ca',
+    description: 'Xuất xứ Malaysia • Kích thước: 604×115×12mm • Chống nước: Bảo hành ngập nước 1 năm • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 20 năm',
+    shortDescription: 'Sàn gỗ xương cá, kiểu dáng độc đáo sang trọng',
+    image: '/products/Sàn gỗ xương cá /OX1.jpg',
+    originalPrice: '510.000đ/m²',
+    discountedPrice: '450.000đ/m²',
+    colorCount: 12,
+    colors: [
+      '/products/Sàn gỗ xương cá /OX1.jpg',
+      '/products/Sàn gỗ xương cá /OX2.jpg',
+      '/products/Sàn gỗ xương cá /OX3.jpg',
+      '/products/Sàn gỗ xương cá /OX6.jpg'
+    ],
+    specifications: {
+      origin: 'Malaysia',
+      size: '604 × 115 × 12mm',
+      thickness: '12mm',
+      waterproof: 'Bảo hành ngập nước 1 năm',
+      installation: 'Hèm khóa',
+      surface: ['Tiêu chuẩn AC4 chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
+      warranty: '20 năm về cong vênh, mối mọt'
+    }
+  },
+  {
+    id: '5',
     name: 'Sàn Gỗ Cốt Đen Việt Nam',
     slug: 'san-go-cot-den-viet-nam',
     description: 'Xuất xứ Việt Nam • Kích thước: 1221×168×12mm • Chống ẩm, chống mối mọt, chịu nước 48H • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 15 năm',
@@ -229,7 +177,7 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '8',
+    id: '6',
     name: 'Sàn Gỗ Công Nghệ Đức',
     slug: 'san-go-cong-nghe-duc',
     description: 'Xuất xứ CHLB Đức • Kích thước: 1219×168×12mm / 604×130×12mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa 5G Thụy Điển • Tiêu chuẩn AC4 • Bảo hành 20 năm',
@@ -255,7 +203,33 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '9',
+    id: '7',
+    name: 'Sàn Gỗ Cốt Nâu Việt Nam',
+    slug: 'san-go-cot-nau',
+    description: 'Xuất xứ Việt Nam • Kích thước: 1220×146×12mm • Chống ẩm, chống mối mọt • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 10 năm',
+    shortDescription: 'Sàn gỗ cốt nâu giá tốt, chất lượng ổn định',
+    image: '/products/Sàn gỗ cốt nâu/O13.jpg',
+    originalPrice: '299.000đ/m²',
+    discountedPrice: '280.000đ/m²',
+    colorCount: 14,
+    colors: [
+      '/products/Sàn gỗ cốt nâu/1235.jpg',
+      '/products/Sàn gỗ cốt nâu/1250.jpg',
+      '/products/Sàn gỗ cốt nâu/1260.jpg',
+      '/products/Sàn gỗ cốt nâu/1261.jpg'
+    ],
+    specifications: {
+      origin: 'Việt Nam',
+      size: '1220 × 146 × 12mm',
+      thickness: '12mm',
+      durability: 'Chống ẩm, chống mối mọt',
+      installation: 'Hèm khóa',
+      surface: ['Tiêu chuẩn AC4 chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
+      warranty: '10 năm về cong vênh, mối mọt'
+    }
+  },
+  {
+    id: '8',
     name: 'Sàn Gỗ Châu Âu',
     slug: 'san-go-chau-au',
     description: 'Xuất xứ Thổ Nhĩ Kỳ • Kích thước: 1195×189×12mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 20 năm',
@@ -281,7 +255,7 @@ export const categories: Category[] = [
     }
   },
   {
-    id: '10',
+    id: '9',
     name: 'Sàn Nhựa 7.5mm SPC Cao Cấp',
     slug: 'san-nhua-7-5mm-spc-cao-cap',
     description: 'Xuất xứ Việt Nam • Kích thước: 1224×185×7.5mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa • Chống trầy xước, chống mài mòn cao • Vân gỗ tự nhiên • Bảo hành 10 năm',
@@ -300,6 +274,32 @@ export const categories: Category[] = [
       origin: 'Việt Nam',
       size: '1224 × 185 × 7.5mm',
       thickness: '7.5mm',
+      waterproof: 'Bảo hành ngập nước 2 năm',
+      installation: 'Hèm khóa',
+      surface: ['Chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
+      warranty: '10 năm về ẩm mốc, mối mọt'
+    }
+  },
+  {
+    id: '10',
+    name: 'Sàn Nhựa 4mm SPC Cao Cấp',
+    slug: 'san-nhua-4mm-spc-cao-cap',
+    description: 'Xuất xứ Việt Nam • Kích thước: 915×153×4mm • Chống nước: Bảo hành ngập nước 2 năm • Hèm khóa • Chống trầy xước, chống mài mòn cao • Vân gỗ tự nhiên • Bảo hành 10 năm',
+    shortDescription: 'Sàn nhựa SPC dày 4mm, giá tốt, chất lượng ổn định',
+    image: '/products/Sàn nhựa 4mm SPC cao cấp/B418.jpg',
+    originalPrice: '350.000đ/m²',
+    discountedPrice: '285.000đ/m²',
+    colorCount: 12,
+    colors: [
+      '/products/Sàn nhựa 4mm SPC cao cấp/B418.jpg',
+      '/products/Sàn nhựa 4mm SPC cao cấp/B428.jpg',
+      '/products/Sàn nhựa 4mm SPC cao cấp/B438.jpg',
+      '/products/Sàn nhựa 4mm SPC cao cấp/B458.jpg'
+    ],
+    specifications: {
+      origin: 'Việt Nam',
+      size: '915 × 153 × 4mm',
+      thickness: '4mm',
       waterproof: 'Bảo hành ngập nước 2 năm',
       installation: 'Hèm khóa',
       surface: ['Chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
@@ -334,28 +334,28 @@ export const categories: Category[] = [
   },
   {
     id: '12',
-    name: 'Sàn Gỗ Xương Cá',
-    slug: 'san-go-xuong-ca',
-    description: 'Xuất xứ Malaysia • Kích thước: 604×115×12mm • Chống nước: Bảo hành ngập nước 1 năm • Hèm khóa • Tiêu chuẩn AC4 chống trầy xước • Vân gỗ tự nhiên • Bảo hành 20 năm',
-    shortDescription: 'Sàn gỗ xương cá, kiểu dáng độc đáo sang trọng',
-    image: '/products/Sàn gỗ xương cá /OX1.jpg',
-    originalPrice: '510.000đ/m²',
-    discountedPrice: '450.000đ/m²',
-    colorCount: 12,
+    name: 'Sàn Gỗ 8mm Việt Nam',
+    slug: 'san-go-8mm-viet-nam',
+    description: 'Xuất xứ Việt Nam • Kích thước: 1223×146×8mm • Chống ẩm, chống mối mọt • Hèm khóa • Tiêu chuẩn AC chống trầy xước • Vân gỗ tự nhiên • Bảo hành 10 năm',
+    shortDescription: 'Sàn gỗ 8mm Việt Nam, giá tốt, chất lượng ổn định',
+    image: '/products/Sàn gỗ 8mm Việt Nam/IMG_9463.JPG',
+    originalPrice: '250.000đ/m²',
+    discountedPrice: '245.000đ/m²',
+    colorCount: 10,
     colors: [
-      '/products/Sàn gỗ xương cá /OX1.jpg',
-      '/products/Sàn gỗ xương cá /OX2.jpg',
-      '/products/Sàn gỗ xương cá /OX3.jpg',
-      '/products/Sàn gỗ xương cá /OX6.jpg'
+      '/products/Sàn gỗ 8mm Việt Nam/IMG_9463.JPG',
+      '/products/Sàn gỗ 8mm Việt Nam/IMG_9464.JPG',
+      '/products/Sàn gỗ 8mm Việt Nam/IMG_9465.JPG',
+      '/products/Sàn gỗ 8mm Việt Nam/IMG_9466.JPG'
     ],
     specifications: {
-      origin: 'Malaysia',
-      size: '604 × 115 × 12mm',
-      thickness: '12mm',
-      waterproof: 'Bảo hành ngập nước 1 năm',
+      origin: 'Việt Nam',
+      size: '1223 × 146 × 8mm',
+      thickness: '8mm',
+      durability: 'Chống ẩm, chống mối mọt',
       installation: 'Hèm khóa',
-      surface: ['Tiêu chuẩn AC4 chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
-      warranty: '20 năm về cong vênh, mối mọt'
+      surface: ['Tiêu chuẩn AC chống trầy xước, chống mài mòn cao', 'Vân gỗ tự nhiên'],
+      warranty: '10 năm về cong vênh, mối mọt'
     }
   },
   {

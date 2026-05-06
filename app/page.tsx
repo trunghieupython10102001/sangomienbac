@@ -1,13 +1,14 @@
 import Link from "next/link";
-import Image from "next/image";
 import { categories } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
-import { Phone, CheckCircle, Award, Truck, Star, Shield, Clock } from "lucide-react";
+import BestSellers from "@/components/BestSellers";
+import { Phone, CheckCircle, Award, Truck } from "lucide-react";
 
 export default function Home() {
   return (
     <div className="min-h-screen">
 
+      <BestSellers />
 
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">

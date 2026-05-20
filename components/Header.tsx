@@ -4,9 +4,18 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail } from 'lucide-react';
+import { defaultSiteSettings, type SiteSettings } from '@/lib/default-data';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [settings, setSettings] = useState<SiteSettings>(defaultSiteSettings);
+
+  useEffect(() => {
+    fetch('/api/content?key=site-settings')
+      .then((res) => res.json())
+      .then((json) => { if (json.data) setSettings(json.data); })
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     const header = document.querySelector('header');
@@ -38,21 +47,22 @@ export default function Header() {
             <div className="flex items-center gap-2">
               <Phone className="w-4 h-4" />
               <div className="flex gap-2">
-                <a href="tel:0363974768" className="hover:text-amber-100 transition">
-                  0363.974.768
-                </a>
-                <span>-</span>
-                <a href="tel:0969897297" className="hover:text-amber-100 transition">
-                  0969.897.297
-                </a>
+                {settings.phones.map((phone, i) => (
+                  <span key={phone} className="flex items-center gap-2">
+                    {i > 0 && <span>-</span>}
+                    <a href={`tel:${phone}`} className="hover:text-amber-100 transition">
+                      {phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1.$2.$3')}
+                    </a>
+                  </span>
+                ))}
               </div>
             </div>
             <div className="hidden sm:flex items-center gap-2">
               <Mail className="w-4 h-4" />
-              <span>Sangomienbac86@gmail.com</span>
+              <span>{settings.email}</span>
             </div>
           </div>
-          <span className="font-medium">Tư vấn miễn phí - Thi công chuyên nghiệp</span>
+          <span className="font-medium">{settings.slogan}</span>
         </div>
       </div>
 
@@ -73,7 +83,7 @@ export default function Header() {
               <span className="logo-text font-bold bg-gradient-to-r from-amber-700 to-amber-600 bg-clip-text text-transparent group-hover:from-amber-800 group-hover:to-amber-700 transition-all duration-300 ease-out">
                 Kho sàn gỗ Miền Bắc
               </span>
-              <span className="logo-tagline text-xs sm:text-sm text-gray-600 font-medium transition-all duration-300 ease-out">Chất lượng - Uy tín - Giá tốt</span>
+              <span className="logo-tagline text-xs sm:text-sm text-gray-600 font-medium transition-all duration-300 ease-out">{settings.tagline}</span>
             </div>
           </Link>
 

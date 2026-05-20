@@ -1,6 +1,6 @@
 'use client';
 
-import { categories, Category } from "@/lib/products";
+import { categories as staticCategories, Category } from "@/lib/products";
 import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -11,7 +11,16 @@ import ImageViewer from "@/components/ImageViewer";
 export default function CategoryPage() {
   const params = useParams();
   const slug = params.slug as string;
-  const category = categories.find((cat) => cat.slug === slug);
+  const [allCategories, setAllCategories] = useState<Category[]>(staticCategories);
+
+  useEffect(() => {
+    fetch('/api/content?key=products')
+      .then((res) => res.json())
+      .then((json) => { if (json.data) setAllCategories(json.data); })
+      .catch(() => {});
+  }, []);
+
+  const category = allCategories.find((cat) => cat.slug === slug);
 
   if (!category) {
     notFound();

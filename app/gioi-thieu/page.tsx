@@ -1,7 +1,9 @@
 import Image from "next/image";
 import { CheckCircle, Award, Users, Truck, Star, Shield } from "lucide-react";
+import { getAboutContent } from "@/lib/site-data";
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const about = await getAboutContent();
   return (
     <div className="min-h-screen">
       <section className="py-20 bg-gradient-to-b from-amber-50 via-white to-gray-50">
@@ -11,10 +13,10 @@ export default function AboutPage() {
               VỀ CHÚNG TÔI
             </div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Kho sàn gỗ Miền Bắc
+              {about.heroTitle}
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Chuyên cung cấp và thi công sàn gỗ công nghiệp, sàn nhựa chất lượng cao - Giá tại kho
+              {about.heroSubtitle}
             </p>
           </div>
 

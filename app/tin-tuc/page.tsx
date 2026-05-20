@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import { newsArticles } from "@/lib/news";
 import { ArrowRight } from "lucide-react";
+import { getNewsArticles } from "@/lib/site-data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,7 +9,8 @@ export const metadata: Metadata = {
   description: "Cập nhật tin tức mới nhất về sàn gỗ, xu hướng thiết kế nội thất và kiến thức chọn sàn phù hợp.",
 };
 
-export default function TinTucPage() {
+export default async function TinTucPage() {
+  const newsArticles = await getNewsArticles();
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <section className="py-16">

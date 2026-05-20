@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { categories } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 import BestSellers from "@/components/BestSellers";
 import { Phone, CheckCircle, Award, Truck } from "lucide-react";
+import { getProducts, getSiteSettings } from "@/lib/site-data";
 
-export default function Home() {
+export default async function Home() {
+  const [categories, settings] = await Promise.all([getProducts(), getSiteSettings()]);
   return (
     <div className="min-h-screen">
 
@@ -87,20 +88,16 @@ export default function Home() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href="tel:0363974768"
-                className="group inline-flex items-center gap-3 bg-white text-amber-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
-              >
-                <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                <span>0363.974.768</span>
-              </a>
-              <a
-                href="tel:0969897297"
-                className="group inline-flex items-center gap-3 bg-white text-amber-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
-              >
-                <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
-                <span>0969.897.297</span>
-              </a>
+              {settings.phones.map((phone) => (
+                <a
+                  key={phone}
+                  href={`tel:${phone}`}
+                  className="group inline-flex items-center gap-3 bg-white text-amber-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
+                >
+                  <Phone className="w-6 h-6 group-hover:rotate-12 transition-transform" />
+                  <span>{phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1.$2.$3')}</span>
+                </a>
+              ))}
             </div>
             <Link
               href="/lien-he"

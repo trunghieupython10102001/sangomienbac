@@ -1,8 +1,9 @@
-import { categories } from "@/lib/products";
 import ProductCard from "@/components/ProductCard";
 import BestSellers from "@/components/BestSellers";
+import { getProducts } from "@/lib/site-data";
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const categories = await getProducts();
   return (
     <div className="min-h-screen">
       <BestSellers />

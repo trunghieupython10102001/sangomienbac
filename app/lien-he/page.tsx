@@ -1,7 +1,9 @@
 import { Phone, Mail, MapPin, Clock, Send, MessageSquare } from "lucide-react";
 import ContactForm from "./ContactForm";
+import { getSiteSettings } from "@/lib/site-data";
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const settings = await getSiteSettings();
   return (
     <div className="min-h-screen">
       <section className="py-20 bg-gradient-to-b from-amber-50 via-white to-gray-50">
@@ -37,12 +39,11 @@ export default function ContactPage() {
                       <div>
                         <h3 className="font-bold text-lg mb-2 text-gray-900">Hotline</h3>
                         <div className="space-y-2">
-                          <a href="tel:0363974768" className="text-green-700 hover:text-green-800 font-semibold text-lg block transition-colors">
-                            0363.974.768
-                          </a>
-                          <a href="tel:0969897297" className="text-green-700 hover:text-green-800 font-semibold text-lg block transition-colors">
-                            0969.897.297
-                          </a>
+                          {settings.phones.map((phone) => (
+                            <a key={phone} href={`tel:${phone}`} className="text-green-700 hover:text-green-800 font-semibold text-lg block transition-colors">
+                              {phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1.$2.$3')}
+                            </a>
+                          ))}
                         </div>
                       </div>
                     </div>
@@ -55,8 +56,8 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <h3 className="font-bold text-lg mb-2 text-gray-900">Email</h3>
-                        <a href="mailto:Sangomienbac86@gmail.com" className="text-blue-700 hover:text-blue-800 font-semibold transition-colors break-all">
-                          Sangomienbac86@gmail.com
+                        <a href={`mailto:${settings.email}`} className="text-blue-700 hover:text-blue-800 font-semibold transition-colors break-all">
+                          {settings.email}
                         </a>
                       </div>
                     </div>
@@ -69,7 +70,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <h3 className="font-bold text-lg mb-2 text-gray-900">Địa chỉ Showroom</h3>
-                        <p className="text-gray-700 leading-relaxed">26a, ngõ 31 Cầu Diễn, Xuân Phương, Hà Nội</p>
+                        <p className="text-gray-700 leading-relaxed">{settings.address}</p>
                       </div>
                     </div>
                   </div>
@@ -81,7 +82,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <h3 className="font-bold text-lg mb-2 text-gray-900">Giờ làm việc</h3>
-                        <p className="text-gray-700 leading-relaxed">Thứ 2 - Chủ nhật: 8:00 - 18:00</p>
+                        <p className="text-gray-700 leading-relaxed">{settings.workingHours}</p>
                       </div>
                     </div>
                   </div>

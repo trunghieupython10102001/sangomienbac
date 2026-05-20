@@ -1,21 +1,9 @@
-'use client';
-
 import Image from 'next/image';
 import { Flame } from 'lucide-react';
+import { getBestSellers } from '@/lib/site-data';
 
-const bestSellers = [
-  { code: 'W93', price: '590.000', image: '/Sản phẩm bán chạy/W93 - 590.000.jpg' },
-  { code: 'W96', price: '590.000', image: '/Sản phẩm bán chạy/W96 - 590.000.jpg' },
-  { code: 'OX8', price: '550.000', image: '/Sản phẩm bán chạy/OX8 - 550.000.jpg' },
-  { code: 'M162', price: '460.000', image: '/Sản phẩm bán chạy/M162 - 460.000.jpg' },
-  { code: 'M168', price: '460.000', image: '/Sản phẩm bán chạy/M168 - 460.000.jpg' },
-  { code: 'PX99-1', price: '430.000', image: '/Sản phẩm bán chạy/PX99-1 - 430.000.JPG' },
-  { code: 'Z001', price: '390.000', image: '/Sản phẩm bán chạy/Z001 - 390.000.jpg' },
-  { code: 'Z008', price: '390.000', image: '/Sản phẩm bán chạy/Z008 - 390.000.jpg' },
-  { code: 'N777', price: '370.000', image: '/Sản phẩm bán chạy/N777 - 370.000.jpg' },
-];
-
-export default function BestSellers() {
+export default async function BestSellers() {
+  const bestSellers = await getBestSellers();
   return (
     <section className="py-16 bg-gradient-to-b from-red-50 via-orange-50 to-white">
       <div className="container mx-auto px-4">

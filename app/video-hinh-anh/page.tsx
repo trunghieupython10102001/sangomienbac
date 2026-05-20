@@ -1,146 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Play, X } from "lucide-react";
-
-const mediaItems = [
-  {
-    type: "video",
-    src: "/Video & hình ảnh thực tế/MONAS Cốt xanh N777.mp4",
-    thumbnail: "/Video & hình ảnh thực tế/MONAS N776.JPG",
-    title: "MONAS Cốt xanh N777",
-    description: "Video thi công sàn gỗ MONAS cốt xanh"
-  },
-  {
-    type: "video",
-    src: "/Video & hình ảnh thực tế/OPEN W93.mp4",
-    thumbnail: "/Video & hình ảnh thực tế/OPEN W91.JPG",
-    title: "OPEN W93",
-    description: "Video hoàn thiện sàn gỗ OPEN W93"
-  },
-  {
-    type: "video",
-    src: "/Video & hình ảnh thực tế/Sàn nhựa SPC Z001.mov",
-    thumbnail: "/Video & hình ảnh thực tế/OPEN Z001.JPG",
-    title: "Sàn nhựa SPC Z001",
-    description: "Video thi công sàn nhựa SPC Z001"
-  },
-  {
-    type: "video",
-    src: "/Video & hình ảnh thực tế/Video O13.mov",
-    thumbnail: "/Video & hình ảnh thực tế/OPEN OX6.jpeg",
-    title: "Video O13",
-    description: "Video hoàn thiện công trình"
-  },
-  {
-    type: "video",
-    src: "/Video & hình ảnh thực tế/Video OX6.mov",
-    thumbnail: "/Video & hình ảnh thực tế/OPEN OX6.jpeg",
-    title: "Video OX6",
-    description: "Video thi công sàn gỗ xương cá OX6"
-  },
-  {
-    type: "video",
-    src: "/Video & hình ảnh thực tế/video OX9.mov",
-    thumbnail: "/Video & hình ảnh thực tế/OPEN OX8.JPG",
-    title: "Video OX9",
-    description: "Video hoàn thiện sàn gỗ xương cá OX9"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/MONAS N776(1).JPG",
-    title: "MONAS N776",
-    description: "Hình ảnh hoàn thiện sàn gỗ MONAS N776"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/MONAS N776.JPG",
-    title: "MONAS N776",
-    description: "Sàn gỗ MONAS N776 sau thi công"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/MONAS N778.JPG",
-    title: "MONAS N778",
-    description: "Hình ảnh hoàn thiện sàn gỗ MONAS N778"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/OPEN OX6.jpeg",
-    title: "OPEN OX6",
-    description: "Sàn gỗ xương cá OPEN OX6"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/OPEN OX8(1).JPG",
-    title: "OPEN OX8",
-    description: "Hình ảnh hoàn thiện sàn gỗ OPEN OX8"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/OPEN OX8.JPG",
-    title: "OPEN OX8",
-    description: "Sàn gỗ OPEN OX8 sau thi công"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/OPEN W91.JPG",
-    title: "OPEN W91",
-    description: "Hình ảnh hoàn thiện sàn gỗ OPEN W91"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/OPEN Z001.JPG",
-    title: "OPEN Z001",
-    description: "Sàn nhựa OPEN Z001 sau thi công"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/OPEN Z008.JPG",
-    title: "OPEN Z008",
-    description: "Hình ảnh hoàn thiện sàn nhựa OPEN Z008"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/PX99-2.JPG",
-    title: "PX99",
-    description: "Sàn gỗ PX99 sau thi công"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/PX99-3.jpeg",
-    title: "PX99",
-    description: "Hình ảnh hoàn thiện sàn gỗ PX99"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/z5734371078601_90d3ae5ed7edeff1f81738a260f34c34-1024x768.jpeg",
-    title: "Công trình hoàn thiện",
-    description: "Hình ảnh thực tế công trình"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/ỐP NANO 2.JPG",
-    title: "Ốp NANO",
-    description: "Ốp tường NANO hoàn thiện"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/ỐP NANO.PNG",
-    title: "Ốp NANO",
-    description: "Hình ảnh ốp tường NANO"
-  },
-  {
-    type: "image",
-    src: "/Video & hình ảnh thực tế/Ốp NANO.JPG",
-    title: "Ốp NANO",
-    description: "Ốp tường NANO sau thi công"
-  }
-];
+import { defaultMediaItems, type MediaItem } from "@/lib/default-data";
 
 export default function VideoHinhAnhPage() {
+  const [mediaItems, setMediaItems] = useState<MediaItem[]>(defaultMediaItems);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "video" | "image">("all");
+
+  useEffect(() => {
+    fetch('/api/content?key=media')
+      .then((res) => res.json())
+      .then((json) => { if (json.data) setMediaItems(json.data); })
+      .catch(() => {});
+  }, []);
 
   const filteredItems = mediaItems.filter(item => 
     filter === "all" ? true : item.type === filter

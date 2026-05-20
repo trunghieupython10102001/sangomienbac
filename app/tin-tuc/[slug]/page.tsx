@@ -1,4 +1,4 @@
-import { newsArticles } from "@/lib/news";
+import { getNewsArticles } from "@/lib/site-data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -10,6 +10,7 @@ interface PageProps {
 }
 
 export async function generateStaticParams() {
+  const newsArticles = await getNewsArticles();
   return newsArticles.map((article) => ({
     slug: article.slug,
   }));
@@ -17,6 +18,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
+  const newsArticles = await getNewsArticles();
   const article = newsArticles.find((a) => a.slug === slug);
   if (!article) return {};
   return {
@@ -27,6 +29,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function NewsDetailPage({ params }: PageProps) {
   const { slug } = await params;
+  const newsArticles = await getNewsArticles();
   const article = newsArticles.find((a) => a.slug === slug);
 
   if (!article) {

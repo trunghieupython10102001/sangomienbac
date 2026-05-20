@@ -1,8 +1,21 @@
+'use client';
+
 import { Phone, Mail, MapPin, Facebook, MessageCircle, Clock } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
+import { defaultSiteSettings, type SiteSettings } from '@/lib/default-data';
 
 export default function Footer() {
+  const [settings, setSettings] = useState<SiteSettings>(defaultSiteSettings);
+
+  useEffect(() => {
+    fetch('/api/content?key=site-settings')
+      .then((res) => res.json())
+      .then((json) => { if (json.data) setSettings(json.data); })
+      .catch(() => {});
+  }, []);
+
   return (
     <footer className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
       <div className="container mx-auto px-4 py-16">
@@ -83,27 +96,26 @@ export default function Footer() {
                 <div className="bg-amber-600/10 p-2 rounded-lg group-hover:bg-amber-600/20 transition-colors">
                   <MapPin className="w-4 h-4 text-amber-500 flex-shrink-0" />
                 </div>
-                <span className="leading-relaxed">26a, ngõ 31 Cầu Diễn, Xuân Phương, Hà Nội</span>
+                <span className="leading-relaxed">{settings.address}</span>
               </li>
               <li className="flex items-start gap-3 group">
                 <div className="bg-amber-600/10 p-2 rounded-lg group-hover:bg-amber-600/20 transition-colors">
                   <Phone className="w-4 h-4 text-amber-500 flex-shrink-0" />
                 </div>
                 <div className="space-y-1">
-                  <a href="tel:0363974768" className="hover:text-amber-500 transition-colors font-semibold block">
-                    0363.974.768
-                  </a>
-                  <a href="tel:0969897297" className="hover:text-amber-500 transition-colors font-semibold block">
-                    0969.897.297
-                  </a>
+                  {settings.phones.map((phone) => (
+                    <a key={phone} href={`tel:${phone}`} className="hover:text-amber-500 transition-colors font-semibold block">
+                      {phone.replace(/(\d{4})(\d{3})(\d{3})/, '$1.$2.$3')}
+                    </a>
+                  ))}
                 </div>
               </li>
               <li className="flex items-center gap-3 group">
                 <div className="bg-amber-600/10 p-2 rounded-lg group-hover:bg-amber-600/20 transition-colors">
                   <Mail className="w-4 h-4 text-amber-500 flex-shrink-0" />
                 </div>
-                <a href="mailto:Sangomienbac86@gmail.com" className="hover:text-amber-500 transition-colors">
-                  Sangomienbac86@gmail.com
+                <a href={`mailto:${settings.email}`} className="hover:text-amber-500 transition-colors">
+                  {settings.email}
                 </a>
               </li>
             </ul>
@@ -117,8 +129,7 @@ export default function Footer() {
                   <Clock className="w-4 h-4 text-amber-500" />
                 </div>
                 <div className="text-gray-400">
-                  <p className="font-semibold text-white mb-1">Thứ 2 - Chủ nhật</p>
-                  <p className="text-sm">8:00 - 18:00</p>
+                  <p className="font-semibold text-white mb-1">{settings.workingHours}</p>
                 </div>
               </div>
               <div className="bg-gradient-to-r from-amber-600 to-orange-600 p-4 rounded-xl">

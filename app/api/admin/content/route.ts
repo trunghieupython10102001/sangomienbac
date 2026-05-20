@@ -49,7 +49,9 @@ export async function PUT(request: NextRequest) {
 
     const url = await setContent(key, data);
     return NextResponse.json({ success: true, url });
-  } catch {
-    return NextResponse.json({ error: 'Lỗi lưu dữ liệu' }, { status: 500 });
+  } catch (e: unknown) {
+    const message = e instanceof Error ? e.message : String(e);
+    console.error('[admin/content PUT]', message);
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }

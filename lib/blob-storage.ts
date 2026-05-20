@@ -12,7 +12,8 @@ export type ContentKey =
 
 export async function getContent<T>(key: ContentKey): Promise<T | null> {
   try {
-    const { blobs } = await list({ prefix: BLOB_PREFIX + key });
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    const { blobs } = await list({ prefix: BLOB_PREFIX + key, token: token || undefined });
     if (blobs.length === 0) return null;
 
     const latestBlob = blobs.sort(
@@ -29,6 +30,10 @@ export async function getContent<T>(key: ContentKey): Promise<T | null> {
 }
 
 export async function setContent<T>(key: ContentKey, data: T): Promise<string> {
+  const token = process.env.BLOB_READ_WRITE_TOKEN;
+  if (!token) {
+    throw new Error('BLOB_READ_WRITE_TOKEN is not configured');
+  }
   const blob = await put(
     BLOB_PREFIX + key + '.json',
     JSON.stringify(data, null, 2),
@@ -36,6 +41,7 @@ export async function setContent<T>(key: ContentKey, data: T): Promise<string> {
       access: 'public',
       contentType: 'application/json',
       addRandomSuffix: false,
+      token,
     }
   );
   return blob.url;

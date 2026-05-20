@@ -41,6 +41,7 @@ export async function setContent<T>(key: ContentKey, data: T): Promise<string> {
       access: 'public',
       contentType: 'application/json',
       addRandomSuffix: false,
+      allowOverwrite: true,
       token,
     }
   );

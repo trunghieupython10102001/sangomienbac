@@ -21,10 +21,10 @@ export default function SiteSettingsPage() {
   async function handleSave() {
     setSaving(true);
     setMessage('');
-    const ok = await saveContent('site-settings', data);
-    setMessage(ok ? 'Lưu thành công!' : 'Lỗi khi lưu');
+    const result = await saveContent('site-settings', data);
+    setMessage(result.ok ? 'Lưu thành công!' : `Lỗi: ${result.error}`);
     setSaving(false);
-    setTimeout(() => setMessage(''), 3000);
+    setTimeout(() => setMessage(''), 5000);
   }
 
   if (loading) {
@@ -62,7 +62,7 @@ export default function SiteSettingsPage() {
             type="text"
             value={data.shopName}
             onChange={(e) => setData({ ...data, shopName: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
 
@@ -72,7 +72,7 @@ export default function SiteSettingsPage() {
             value={data.phones.join('\n')}
             onChange={(e) => setData({ ...data, phones: e.target.value.split('\n').filter(Boolean) })}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
 
@@ -82,7 +82,7 @@ export default function SiteSettingsPage() {
             type="email"
             value={data.email}
             onChange={(e) => setData({ ...data, email: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
 
@@ -92,7 +92,7 @@ export default function SiteSettingsPage() {
             type="text"
             value={data.address}
             onChange={(e) => setData({ ...data, address: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
 
@@ -102,7 +102,7 @@ export default function SiteSettingsPage() {
             type="text"
             value={data.workingHours}
             onChange={(e) => setData({ ...data, workingHours: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
 
@@ -112,7 +112,7 @@ export default function SiteSettingsPage() {
             type="text"
             value={data.slogan}
             onChange={(e) => setData({ ...data, slogan: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
 
@@ -122,7 +122,7 @@ export default function SiteSettingsPage() {
             type="text"
             value={data.tagline}
             onChange={(e) => setData({ ...data, tagline: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
 
@@ -132,7 +132,7 @@ export default function SiteSettingsPage() {
             type="text"
             value={data.facebookUrl}
             onChange={(e) => setData({ ...data, facebookUrl: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
 
@@ -142,7 +142,7 @@ export default function SiteSettingsPage() {
             type="text"
             value={data.zaloUrl}
             onChange={(e) => setData({ ...data, zaloUrl: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
       </div>

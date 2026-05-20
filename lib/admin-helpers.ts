@@ -7,11 +7,20 @@ export async function fetchContent<T>(key: ContentKey): Promise<T | null> {
   return json.data as T | null;
 }
 
-export async function saveContent<T>(key: ContentKey, data: T): Promise<boolean> {
-  const res = await fetch('/api/admin/content', {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ key, data }),
-  });
-  return res.ok;
+export async function saveContent<T>(key: ContentKey, data: T): Promise<{ ok: boolean; error?: string }> {
+  try {
+    const res = await fetch('/api/admin/content', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ key, data }),
+    });
+    if (!res.ok) {
+      const json = await res.json().catch(() => ({}));
+      return { ok: false, error: json.error || `Lỗi ${res.status}` };
+    }
+    return { ok: true };
+  } catch (e) {
+    return { ok: false, error: String(e) };
+  }
 }

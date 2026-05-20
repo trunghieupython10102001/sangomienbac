@@ -22,10 +22,10 @@ export default function NewsAdminPage() {
   async function handleSave() {
     setSaving(true);
     setMessage('');
-    const ok = await saveContent('news', data);
-    setMessage(ok ? 'Lưu thành công!' : 'Lỗi khi lưu');
+    const result = await saveContent('news', data);
+    setMessage(result.ok ? 'Lưu thành công!' : `Lỗi: ${result.error}`);
     setSaving(false);
-    setTimeout(() => setMessage(''), 3000);
+    setTimeout(() => setMessage(''), 5000);
   }
 
   function updateArticle(id: number, updates: Partial<NewsArticle>) {
@@ -121,7 +121,7 @@ export default function NewsAdminPage() {
                       type="text"
                       value={article.title}
                       onChange={(e) => updateArticle(article.id, { title: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                   <div>
@@ -130,7 +130,7 @@ export default function NewsAdminPage() {
                       type="text"
                       value={article.slug}
                       onChange={(e) => updateArticle(article.id, { slug: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                 </div>
@@ -142,7 +142,7 @@ export default function NewsAdminPage() {
                       type="date"
                       value={article.date}
                       onChange={(e) => updateArticle(article.id, { date: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                   <div>
@@ -151,7 +151,7 @@ export default function NewsAdminPage() {
                       type="text"
                       value={article.thumbnail}
                       onChange={(e) => updateArticle(article.id, { thumbnail: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export default function NewsAdminPage() {
                     value={article.excerpt}
                     onChange={(e) => updateArticle(article.id, { excerpt: e.target.value })}
                     rows={2}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                   />
                 </div>
 
@@ -172,7 +172,7 @@ export default function NewsAdminPage() {
                     value={article.content}
                     onChange={(e) => updateArticle(article.id, { content: e.target.value })}
                     rows={12}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none font-mono text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none font-mono text-sm text-gray-900"
                   />
                 </div>
 
@@ -182,7 +182,7 @@ export default function NewsAdminPage() {
                     value={article.images.join('\n')}
                     onChange={(e) => updateArticle(article.id, { images: e.target.value.split('\n').filter(Boolean) })}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none font-mono text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none font-mono text-sm text-gray-900"
                   />
                 </div>
               </div>

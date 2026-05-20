@@ -21,10 +21,10 @@ export default function MediaAdminPage() {
   async function handleSave() {
     setSaving(true);
     setMessage('');
-    const ok = await saveContent('media', data);
-    setMessage(ok ? 'Lưu thành công!' : 'Lỗi khi lưu');
+    const result = await saveContent('media', data);
+    setMessage(result.ok ? 'Lưu thành công!' : `Lỗi: ${result.error}`);
     setSaving(false);
-    setTimeout(() => setMessage(''), 3000);
+    setTimeout(() => setMessage(''), 5000);
   }
 
   function updateItem(index: number, updates: Partial<MediaItem>) {
@@ -112,7 +112,7 @@ export default function MediaAdminPage() {
                       type="text"
                       value={item.title}
                       onChange={(e) => updateItem(index, { title: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                   <div>
@@ -121,7 +121,7 @@ export default function MediaAdminPage() {
                       type="text"
                       value={item.description}
                       onChange={(e) => updateItem(index, { description: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                 </div>
@@ -134,7 +134,7 @@ export default function MediaAdminPage() {
                       type="text"
                       value={item.src}
                       onChange={(e) => updateItem(index, { src: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                   {item.type === 'video' && (
@@ -144,7 +144,7 @@ export default function MediaAdminPage() {
                         type="text"
                         value={item.thumbnail || ''}
                         onChange={(e) => updateItem(index, { thumbnail: e.target.value })}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                        className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                       />
                     </div>
                   )}

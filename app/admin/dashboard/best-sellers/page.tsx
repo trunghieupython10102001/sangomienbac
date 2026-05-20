@@ -21,10 +21,10 @@ export default function BestSellersAdminPage() {
   async function handleSave() {
     setSaving(true);
     setMessage('');
-    const ok = await saveContent('best-sellers', data);
-    setMessage(ok ? 'Lưu thành công!' : 'Lỗi khi lưu');
+    const result = await saveContent('best-sellers', data);
+    setMessage(result.ok ? 'Lưu thành công!' : `Lỗi: ${result.error}`);
     setSaving(false);
-    setTimeout(() => setMessage(''), 3000);
+    setTimeout(() => setMessage(''), 5000);
   }
 
   function updateItem(index: number, updates: Partial<BestSeller>) {
@@ -93,7 +93,7 @@ export default function BestSellersAdminPage() {
                     type="text"
                     value={item.code}
                     onChange={(e) => updateItem(index, { code: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                   />
                 </div>
                 <div>
@@ -102,7 +102,7 @@ export default function BestSellersAdminPage() {
                     type="text"
                     value={item.price}
                     onChange={(e) => updateItem(index, { price: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                   />
                 </div>
                 <div>
@@ -111,7 +111,7 @@ export default function BestSellersAdminPage() {
                     type="text"
                     value={item.image}
                     onChange={(e) => updateItem(index, { image: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                   />
                 </div>
               </div>

@@ -21,10 +21,10 @@ export default function AboutAdminPage() {
   async function handleSave() {
     setSaving(true);
     setMessage('');
-    const ok = await saveContent('about', data);
-    setMessage(ok ? 'Lưu thành công!' : 'Lỗi khi lưu');
+    const result = await saveContent('about', data);
+    setMessage(result.ok ? 'Lưu thành công!' : `Lỗi: ${result.error}`);
     setSaving(false);
-    setTimeout(() => setMessage(''), 3000);
+    setTimeout(() => setMessage(''), 5000);
   }
 
   function updateSection(index: number, updates: { title?: string; content?: string }) {
@@ -84,7 +84,7 @@ export default function AboutAdminPage() {
             type="text"
             value={data.heroTitle}
             onChange={(e) => setData({ ...data, heroTitle: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
           />
         </div>
         <div>
@@ -93,7 +93,7 @@ export default function AboutAdminPage() {
             type="text"
             value={data.heroSubtitle}
             onChange={(e) => setData({ ...data, heroSubtitle: e.target.value })}
-            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
           />
         </div>
       </div>
@@ -118,7 +118,7 @@ export default function AboutAdminPage() {
                   type="text"
                   value={section.title}
                   onChange={(e) => updateSection(index, { title: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                 />
               </div>
               <button
@@ -134,7 +134,7 @@ export default function AboutAdminPage() {
                 value={section.content}
                 onChange={(e) => updateSection(index, { content: e.target.value })}
                 rows={4}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
               />
             </div>
           </div>

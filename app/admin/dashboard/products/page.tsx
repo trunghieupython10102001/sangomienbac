@@ -22,10 +22,10 @@ export default function ProductsAdminPage() {
   async function handleSave() {
     setSaving(true);
     setMessage('');
-    const ok = await saveContent('products', data);
-    setMessage(ok ? 'Lưu thành công!' : 'Lỗi khi lưu');
+    const result = await saveContent('products', data);
+    setMessage(result.ok ? 'Lưu thành công!' : `Lỗi: ${result.error}`);
     setSaving(false);
-    setTimeout(() => setMessage(''), 3000);
+    setTimeout(() => setMessage(''), 5000);
   }
 
   function updateCategory(id: string, updates: Partial<Category>) {
@@ -134,7 +134,7 @@ export default function ProductsAdminPage() {
                       type="text"
                       value={cat.name}
                       onChange={(e) => updateCategory(cat.id, { name: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                   <div>
@@ -143,7 +143,7 @@ export default function ProductsAdminPage() {
                       type="text"
                       value={cat.slug}
                       onChange={(e) => updateCategory(cat.id, { slug: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                 </div>
@@ -154,7 +154,7 @@ export default function ProductsAdminPage() {
                     type="text"
                     value={cat.shortDescription}
                     onChange={(e) => updateCategory(cat.id, { shortDescription: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                   />
                 </div>
 
@@ -164,7 +164,7 @@ export default function ProductsAdminPage() {
                     value={cat.description}
                     onChange={(e) => updateCategory(cat.id, { description: e.target.value })}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                   />
                 </div>
 
@@ -174,7 +174,7 @@ export default function ProductsAdminPage() {
                     type="text"
                     value={cat.image}
                     onChange={(e) => updateCategory(cat.id, { image: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                   />
                 </div>
 
@@ -185,7 +185,7 @@ export default function ProductsAdminPage() {
                       type="text"
                       value={cat.originalPrice || ''}
                       onChange={(e) => updateCategory(cat.id, { originalPrice: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                   <div>
@@ -194,7 +194,7 @@ export default function ProductsAdminPage() {
                       type="text"
                       value={cat.discountedPrice || ''}
                       onChange={(e) => updateCategory(cat.id, { discountedPrice: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                   <div>
@@ -203,7 +203,7 @@ export default function ProductsAdminPage() {
                       type="text"
                       value={cat.priceRange || ''}
                       onChange={(e) => updateCategory(cat.id, { priceRange: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export default function ProductsAdminPage() {
                     type="number"
                     value={cat.colorCount}
                     onChange={(e) => updateCategory(cat.id, { colorCount: Number(e.target.value) })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                   />
                 </div>
 
@@ -224,7 +224,7 @@ export default function ProductsAdminPage() {
                     value={cat.colors.join('\n')}
                     onChange={(e) => updateCategory(cat.id, { colors: e.target.value.split('\n').filter(Boolean) })}
                     rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none font-mono text-sm"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none font-mono text-sm text-gray-900"
                   />
                 </div>
 

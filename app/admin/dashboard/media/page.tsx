@@ -2,24 +2,8 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Save, Loader2, Trash2, Upload, Image, Film } from 'lucide-react';
-import { fetchContent, saveContent } from '@/lib/admin-helpers';
+import { fetchContent, saveContent, uploadFile } from '@/lib/admin-helpers';
 import { defaultMediaItems, type MediaItem } from '@/lib/default-data';
-
-async function uploadFile(file: File): Promise<string> {
-  const formData = new FormData();
-  formData.append('file', file);
-  const res = await fetch('/api/admin/upload', {
-    method: 'POST',
-    credentials: 'same-origin',
-    body: formData,
-  });
-  if (!res.ok) {
-    const json = await res.json().catch(() => ({}));
-    throw new Error(json.error || `Upload failed: ${res.status}`);
-  }
-  const json = await res.json();
-  return json.url;
-}
 
 export default function MediaAdminPage() {
   const [data, setData] = useState<MediaItem[]>(defaultMediaItems);

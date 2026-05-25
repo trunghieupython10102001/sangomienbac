@@ -4,12 +4,14 @@ import { useState, useEffect } from 'react';
 import { Save, Loader2, Plus, Trash2 } from 'lucide-react';
 import { fetchContent, saveContent } from '@/lib/admin-helpers';
 import { defaultBestSellers, type BestSeller } from '@/lib/default-data';
+import UploadInput from '@/components/admin/UploadInput';
 
 export default function BestSellersAdminPage() {
   const [data, setData] = useState<BestSeller[]>(defaultBestSellers);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
+  const [uploadMsg, setUploadMsg] = useState('');
 
   useEffect(() => {
     fetchContent<BestSeller[]>('best-sellers').then((res) => {
@@ -73,9 +75,9 @@ export default function BestSellersAdminPage() {
         </div>
       </div>
 
-      {message && (
-        <div className={`mb-4 p-3 rounded-lg text-sm ${message.includes('thành công') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-          {message}
+      {(message || uploadMsg) && (
+        <div className={`mb-4 p-3 rounded-lg text-sm ${(message || uploadMsg).includes('thành công') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {message || uploadMsg}
         </div>
       )}
 
@@ -86,34 +88,33 @@ export default function BestSellersAdminPage() {
               {item.image && (
                 <img src={item.image} alt={item.code} className="w-16 h-16 rounded-lg object-cover flex-shrink-0" />
               )}
-              <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-3">
-                <div>
-                  <label className="block text-xs font-medium text-gray-500 mb-1">Mã sản phẩm</label>
-                  <input
-                    type="text"
-                    value={item.code}
-                    onChange={(e) => updateItem(index, { code: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
-                  />
+              <div className="flex-1 space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Mã sản phẩm</label>
+                    <input
+                      type="text"
+                      value={item.code}
+                      onChange={(e) => updateItem(index, { code: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-medium text-gray-500 mb-1">Giá (VNĐ/m²)</label>
+                    <input
+                      type="text"
+                      value={item.price}
+                      onChange={(e) => updateItem(index, { price: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
+                    />
+                  </div>
                 </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-500 mb-1">Giá (VNĐ/m²)</label>
-                  <input
-                    type="text"
-                    value={item.price}
-                    onChange={(e) => updateItem(index, { price: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-medium text-gray-500 mb-1">Ảnh (URL)</label>
-                  <input
-                    type="text"
-                    value={item.image}
-                    onChange={(e) => updateItem(index, { image: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
-                  />
-                </div>
+                <UploadInput
+                  label="Ảnh sản phẩm"
+                  value={item.image}
+                  onChange={(url) => updateItem(index, { image: url })}
+                  onMessage={(msg) => { setUploadMsg(msg); setTimeout(() => setUploadMsg(''), 3000); }}
+                />
               </div>
               <button
                 onClick={() => removeItem(index)}

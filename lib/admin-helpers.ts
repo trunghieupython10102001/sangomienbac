@@ -1,5 +1,21 @@
 import type { ContentKey } from './blob-storage';
 
+export async function uploadFile(file: File): Promise<string> {
+  const formData = new FormData();
+  formData.append('file', file);
+  const res = await fetch('/api/admin/upload', {
+    method: 'POST',
+    credentials: 'same-origin',
+    body: formData,
+  });
+  if (!res.ok) {
+    const json = await res.json().catch(() => ({}));
+    throw new Error(json.error || `Upload failed: ${res.status}`);
+  }
+  const json = await res.json();
+  return json.url;
+}
+
 export async function fetchContent<T>(key: ContentKey): Promise<T | null> {
   const res = await fetch(`/api/admin/content?key=${key}`);
   if (!res.ok) return null;

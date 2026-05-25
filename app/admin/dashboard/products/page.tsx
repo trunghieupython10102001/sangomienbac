@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Save, Loader2, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { fetchContent, saveContent } from '@/lib/admin-helpers';
 import { categories as staticCategories, type Category } from '@/lib/products';
+import UploadInput from '@/components/admin/UploadInput';
+import MultiUploadInput from '@/components/admin/MultiUploadInput';
 
 export default function ProductsAdminPage() {
   const [data, setData] = useState<Category[]>(staticCategories);
@@ -11,6 +13,7 @@ export default function ProductsAdminPage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [uploadMsg, setUploadMsg] = useState('');
 
   useEffect(() => {
     fetchContent<Category[]>('products').then((res) => {
@@ -92,9 +95,9 @@ export default function ProductsAdminPage() {
         </div>
       </div>
 
-      {message && (
-        <div className={`mb-4 p-3 rounded-lg text-sm ${message.includes('thành công') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-          {message}
+      {(message || uploadMsg) && (
+        <div className={`mb-4 p-3 rounded-lg text-sm ${(message || uploadMsg).includes('thành công') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {message || uploadMsg}
         </div>
       )}
 
@@ -168,15 +171,13 @@ export default function ProductsAdminPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Ảnh đại diện (URL)</label>
-                  <input
-                    type="text"
-                    value={cat.image}
-                    onChange={(e) => updateCategory(cat.id, { image: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
-                  />
-                </div>
+                <UploadInput
+                  label="Ảnh đại diện"
+                  value={cat.image}
+                  onChange={(url) => updateCategory(cat.id, { image: url })}
+                  preview
+                  onMessage={(msg) => { setUploadMsg(msg); setTimeout(() => setUploadMsg(''), 3000); }}
+                />
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <div>
@@ -218,15 +219,12 @@ export default function ProductsAdminPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Danh sách ảnh màu (mỗi dòng 1 URL)</label>
-                  <textarea
-                    value={cat.colors.join('\n')}
-                    onChange={(e) => updateCategory(cat.id, { colors: e.target.value.split('\n').filter(Boolean) })}
-                    rows={4}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none font-mono text-sm text-gray-900"
-                  />
-                </div>
+                <MultiUploadInput
+                  label={`Ảnh màu sắc (${cat.colors.length} ảnh)`}
+                  values={cat.colors}
+                  onChange={(urls) => updateCategory(cat.id, { colors: urls, colorCount: urls.length })}
+                  onMessage={(msg) => { setUploadMsg(msg); setTimeout(() => setUploadMsg(''), 3000); }}
+                />
 
                 <div className="bg-gray-50 rounded-lg p-4">
                   <h4 className="font-semibold text-gray-700 mb-3">Thông số kỹ thuật</h4>

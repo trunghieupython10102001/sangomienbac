@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Save, Loader2, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { fetchContent, saveContent } from '@/lib/admin-helpers';
 import { newsArticles as staticNews, type NewsArticle } from '@/lib/news';
+import UploadInput from '@/components/admin/UploadInput';
+import MultiUploadInput from '@/components/admin/MultiUploadInput';
 
 export default function NewsAdminPage() {
   const [data, setData] = useState<NewsArticle[]>(staticNews);
@@ -11,6 +13,7 @@ export default function NewsAdminPage() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
   const [expandedId, setExpandedId] = useState<number | null>(null);
+  const [uploadMsg, setUploadMsg] = useState('');
 
   useEffect(() => {
     fetchContent<NewsArticle[]>('news').then((res) => {
@@ -84,9 +87,9 @@ export default function NewsAdminPage() {
         </div>
       </div>
 
-      {message && (
-        <div className={`mb-4 p-3 rounded-lg text-sm ${message.includes('thành công') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
-          {message}
+      {(message || uploadMsg) && (
+        <div className={`mb-4 p-3 rounded-lg text-sm ${(message || uploadMsg).includes('thành công') ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+          {message || uploadMsg}
         </div>
       )}
 
@@ -145,15 +148,13 @@ export default function NewsAdminPage() {
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
                     />
                   </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Thumbnail (URL)</label>
-                    <input
-                      type="text"
-                      value={article.thumbnail}
-                      onChange={(e) => updateArticle(article.id, { thumbnail: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none text-gray-900"
-                    />
-                  </div>
+                  <UploadInput
+                    label="Thumbnail"
+                    value={article.thumbnail}
+                    onChange={(url) => updateArticle(article.id, { thumbnail: url })}
+                    preview
+                    onMessage={(msg) => { setUploadMsg(msg); setTimeout(() => setUploadMsg(''), 3000); }}
+                  />
                 </div>
 
                 <div>
@@ -176,15 +177,12 @@ export default function NewsAdminPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Ảnh bài viết (mỗi dòng 1 URL)</label>
-                  <textarea
-                    value={article.images.join('\n')}
-                    onChange={(e) => updateArticle(article.id, { images: e.target.value.split('\n').filter(Boolean) })}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none font-mono text-sm text-gray-900"
-                  />
-                </div>
+                <MultiUploadInput
+                  label={`Ảnh bài viết (${article.images.length} ảnh)`}
+                  values={article.images}
+                  onChange={(urls) => updateArticle(article.id, { images: urls })}
+                  onMessage={(msg) => { setUploadMsg(msg); setTimeout(() => setUploadMsg(''), 3000); }}
+                />
               </div>
             )}
           </div>

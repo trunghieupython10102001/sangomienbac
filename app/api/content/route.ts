@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getContent, type ContentKey } from '@/lib/blob-storage';
+import { getContent, type ContentKey } from '@/lib/s3-storage';
 
 const VALID_KEYS: ContentKey[] = [
   'site-settings',

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { getContent, setContent, type ContentKey } from '@/lib/blob-storage';
+import { getContent, setContent, type ContentKey } from '@/lib/s3-storage';
 
 const VALID_KEYS: ContentKey[] = [
   'site-settings',

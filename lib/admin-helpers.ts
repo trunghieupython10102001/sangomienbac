@@ -1,4 +1,4 @@
-import type { ContentKey } from './blob-storage';
+import type { ContentKey } from './s3-storage';
 
 export async function uploadFile(file: File): Promise<string> {
   const formData = new FormData();

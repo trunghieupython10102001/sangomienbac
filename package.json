@@ -7,11 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx scripts/seed-blob.ts"
+    "seed": "tsx scripts/seed-s3.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1090.0",
     "@supabase/supabase-js": "^2.101.1",
-    "@vercel/blob": "^2.4.0",
     "lucide-react": "^0.577.0",
     "next": "16.2.0",
     "react": "19.2.4",

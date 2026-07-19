@@ -1,4 +1,4 @@
-import { getContent } from './blob-storage';
+import { getContent } from './s3-storage';
 import { categories as staticCategories, type Category } from './products';
 import { newsArticles as staticNews, type NewsArticle } from './news';
 import {

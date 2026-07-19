@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { put } from '@vercel/blob';
+import { uploadToS3 } from '@/lib/s3';
 
 async function isAuthenticated(): Promise<boolean> {
   const cookieStore = await cookies();
@@ -27,21 +27,13 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'File quá lớn (tối đa 50MB)' }, { status: 400 });
     }
 
-    const token = process.env.BLOB_READ_WRITE_TOKEN;
-    if (!token) {
-      return NextResponse.json({ error: 'BLOB_READ_WRITE_TOKEN not configured' }, { status: 500 });
-    }
-
     const timestamp = Date.now();
     const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
-    const pathname = `media/${timestamp}-${safeName}`;
+    const key = `media/${timestamp}-${safeName}`;
 
-    const blob = await put(pathname, file, {
-      access: 'public',
-      token,
-    });
+    const url = await uploadToS3(key, file, file.type);
 
-    return NextResponse.json({ url: blob.url, pathname: blob.pathname });
+    return NextResponse.json({ url, pathname: key });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : String(e);
     console.error('[admin/upload POST]', message);

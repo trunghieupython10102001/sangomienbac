@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
+import { revalidatePath } from 'next/cache';
 import { getContent, setContent, type ContentKey } from '@/lib/s3-storage';
 
 const VALID_KEYS: ContentKey[] = [
@@ -10,6 +11,18 @@ const VALID_KEYS: ContentKey[] = [
   'media',
   'about',
 ];
+
+// Server-rendered pages read content through the AWS SDK (not `fetch`), so
+// Next.js can't auto-revalidate them. After a save we invalidate the specific
+// routes that render each content key so the next visit re-reads S3.
+const REVALIDATE_PATHS: Record<ContentKey, Array<{ path: string; type?: 'page' | 'layout' }>> = {
+  'site-settings': [{ path: '/' }, { path: '/lien-he' }],
+  'products': [{ path: '/' }, { path: '/san-pham' }],
+  'best-sellers': [{ path: '/' }],
+  'news': [{ path: '/tin-tuc' }, { path: '/tin-tuc/[slug]', type: 'page' }],
+  'about': [{ path: '/gioi-thieu' }],
+  'media': [{ path: '/video-hinh-anh' }],
+};
 
 async function isAuthenticated(): Promise<boolean> {
   const cookieStore = await cookies();
@@ -48,6 +61,12 @@ export async function PUT(request: NextRequest) {
     }
 
     const url = await setContent(key, data);
+
+    // Purge the statically-cached public pages that render this content.
+    for (const { path, type } of REVALIDATE_PATHS[key as ContentKey] ?? []) {
+      revalidatePath(path, type);
+    }
+
     return NextResponse.json({ success: true, url });
   } catch (e: unknown) {
     const message = e instanceof Error ? e.message : String(e);

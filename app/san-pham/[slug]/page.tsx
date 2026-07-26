@@ -12,21 +12,7 @@ export default function CategoryPage() {
   const params = useParams();
   const slug = params.slug as string;
   const [allCategories, setAllCategories] = useState<Category[]>(staticCategories);
-
-  useEffect(() => {
-    fetch('/api/content?key=products')
-      .then((res) => res.json())
-      .then((json) => { if (json.data) setAllCategories(json.data); })
-      .catch(() => {});
-  }, []);
-
-  const category = allCategories.find((cat) => cat.slug === slug);
-
-  if (!category) {
-    notFound();
-  }
-
-  const specs = category.specifications;
+  const [categoriesLoaded, setCategoriesLoaded] = useState(false);
   const [images, setImages] = useState<string[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -34,34 +20,54 @@ export default function CategoryPage() {
   const initialImageCount = 6;
 
   useEffect(() => {
-    // Set timeout to prevent long waiting
+    fetch('/api/content?key=products')
+      .then((res) => res.json())
+      .then((json) => { if (json.data) setAllCategories(json.data); })
+      .catch(() => {})
+      .finally(() => setCategoriesLoaded(true));
+  }, []);
+
+  const category = allCategories.find((cat) => cat.slug === slug);
+
+  useEffect(() => {
+    if (!category) return;
+
     const timeoutId = setTimeout(() => {
       if (isLoading) {
-        // Use category.colors as fallback if API takes too long
         setImages(category.colors);
         setIsLoading(false);
       }
-    }, 2000); // 2 second timeout
+    }, 2000);
 
-    // Fetch images from API route
     fetch(`/api/products/${slug}`)
       .then(res => res.json())
       .then(data => {
         clearTimeout(timeoutId);
-        // Use API images if available, otherwise use category.colors
         const imagesToUse = data.images && data.images.length > 0 ? data.images : category.colors;
         setImages(imagesToUse);
         setIsLoading(false);
       })
       .catch(() => {
         clearTimeout(timeoutId);
-        // Fallback to category.colors on error
         setImages(category.colors);
         setIsLoading(false);
       });
 
     return () => clearTimeout(timeoutId);
-  }, [slug, category.colors, isLoading]);
+  }, [slug, category, isLoading]);
+
+  if (!category) {
+    if (!categoriesLoaded) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gray-50">
+          <div className="w-10 h-10 rounded-full border-2 border-amber-600 border-t-transparent animate-spin" />
+        </div>
+      );
+    }
+    notFound();
+  }
+
+  const specs = category.specifications;
 
   return (
     <>

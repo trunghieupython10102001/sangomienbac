@@ -17,7 +17,7 @@ import {
   AlertTriangle,
 } from 'lucide-react';
 import { fetchContent, saveContent, uploadFile } from '@/lib/admin-helpers';
-import { categories as staticCategories, type Category } from '@/lib/products';
+import { categories as staticCategories, type Category, type ProductImage, imageUrl, imageName } from '@/lib/products';
 import UploadInput from '@/components/admin/UploadInput';
 import AdminSaveBar, { useUnsavedWarning } from '@/components/admin/AdminSaveBar';
 
@@ -148,6 +148,17 @@ export default function ProductsAdminPage() {
     updateCategory(catId, { colors: newColors, colorCount: newColors.length });
   }
 
+  function updateColorName(catId: string, index: number, name: string) {
+    const cat = data.find((c) => c.id === catId);
+    if (!cat) return;
+    const newColors = cat.colors.map((c, i) => {
+      if (i !== index) return c;
+      const url = imageUrl(c);
+      return { url, name } as ProductImage;
+    });
+    updateCategory(catId, { colors: newColors });
+  }
+
   async function uploadColorFiles(catId: string, files: File[]) {
     const images = files.filter((f) => f.type.startsWith('image/'));
     if (images.length === 0) return;
@@ -157,18 +168,19 @@ export default function ProductsAdminPage() {
       setUploading(false);
       return;
     }
-    const newUrls: string[] = [];
+    const newImages: ProductImage[] = [];
     for (const file of images) {
       try {
-        newUrls.push(await uploadFile(file));
+        const url = await uploadFile(file);
+        newImages.push({ url, name: file.name.replace(/\.[^.]+$/, '') });
       } catch (e) {
         showMsg(`Lỗi upload: ${e instanceof Error ? e.message : String(e)}`);
       }
     }
-    if (newUrls.length > 0) {
-      const allColors = [...cat.colors, ...newUrls];
+    if (newImages.length > 0) {
+      const allColors = [...cat.colors, ...newImages];
       updateCategory(catId, { colors: allColors, colorCount: allColors.length });
-      showMsg(`Upload ${newUrls.length} ảnh thành công!`);
+      showMsg(`Upload ${newImages.length} ảnh thành công!`);
     }
     setUploading(false);
   }
@@ -483,23 +495,26 @@ export default function ProductsAdminPage() {
                       }`}
                     >
                       {cat.colors.length > 0 ? (
-                        <div className="grid grid-cols-4 gap-2 sm:grid-cols-5 md:grid-cols-6">
-                          {cat.colors.map((url, index) => (
-                            <div
-                              key={index}
-                              className="group relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-100"
-                            >
-                              <img src={url} alt={`Màu ${index + 1}`} className="h-full w-full object-cover" />
-                              <button
-                                onClick={() => removeColor(cat.id, index)}
-                                aria-label={`Xóa màu ${index + 1}`}
-                                className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white opacity-0 transition-opacity group-hover:opacity-100"
-                              >
-                                <X className="h-3 w-3" />
-                              </button>
-                              <span className="absolute bottom-0 left-0 right-0 bg-black/50 py-0.5 text-center text-[10px] text-white">
-                                {index + 1}
-                              </span>
+                        <div className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-5">
+                          {cat.colors.map((entry, index) => (
+                            <div key={index} className="group flex flex-col gap-1">
+                              <div className="relative aspect-square overflow-hidden rounded-lg border border-gray-200 bg-gray-100">
+                                <img src={imageUrl(entry)} alt={imageName(entry)} className="h-full w-full object-cover" />
+                                <button
+                                  onClick={() => removeColor(cat.id, index)}
+                                  aria-label={`Xóa ảnh ${index + 1}`}
+                                  className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                                >
+                                  <X className="h-3 w-3" />
+                                </button>
+                              </div>
+                              <input
+                                type="text"
+                                value={imageName(entry)}
+                                onChange={(e) => updateColorName(cat.id, index, e.target.value)}
+                                placeholder={`Ảnh ${index + 1}`}
+                                className="w-full rounded border border-gray-200 px-1.5 py-1 text-[11px] text-gray-700 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400"
+                              />
                             </div>
                           ))}
                         </div>

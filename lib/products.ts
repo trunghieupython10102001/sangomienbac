@@ -19,6 +19,23 @@ export interface ProductSpecifications {
   material?: string;
 }
 
+export interface ProductImage {
+  url: string;
+  name?: string;
+}
+
+/** Extract the URL from a color entry (plain string or ProductImage object). */
+export function imageUrl(c: string | ProductImage): string {
+  return typeof c === 'string' ? c : c.url;
+}
+
+/** Return the display name, falling back to the filename stem. */
+export function imageName(c: string | ProductImage): string {
+  if (typeof c !== 'string' && c.name) return c.name;
+  const url = typeof c === 'string' ? c : c.url;
+  return url.split('/').pop()?.replace(/\.[^.]+$/, '') ?? '';
+}
+
 export interface Category {
   id: string;
   name: string;
@@ -30,7 +47,7 @@ export interface Category {
   originalPrice?: string;
   discountedPrice?: string;
   colorCount: number;
-  colors: string[];
+  colors: Array<string | ProductImage>;
   specifications: ProductSpecifications;
 }
 

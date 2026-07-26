@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { getContent } from '@/lib/s3-storage';
-import type { Category } from '@/lib/products';
+import { imageUrl, type Category } from '@/lib/products';
 
 const categoryMap: Record<string, string> = {
   'san-go-cao-cap-malaysia': 'Sàn gỗ cao cấp Malaysia ',
@@ -33,7 +33,7 @@ export async function GET(
   if (products) {
     const product = products.find((p) => p.slug === slug);
     if (product && product.colors && product.colors.length > 0) {
-      return NextResponse.json({ images: product.colors });
+      return NextResponse.json({ images: product.colors.map(imageUrl) });
     }
   }
 

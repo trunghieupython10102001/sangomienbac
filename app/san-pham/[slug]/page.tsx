@@ -1,6 +1,6 @@
 'use client';
 
-import { categories as staticCategories, Category } from "@/lib/products";
+import { categories as staticCategories, Category, imageUrl } from "@/lib/products";
 import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -32,9 +32,11 @@ export default function CategoryPage() {
   useEffect(() => {
     if (!category) return;
 
+    const colorUrls = category.colors.map(imageUrl);
+
     const timeoutId = setTimeout(() => {
       if (isLoading) {
-        setImages(category.colors);
+        setImages(colorUrls);
         setIsLoading(false);
       }
     }, 2000);
@@ -43,13 +45,13 @@ export default function CategoryPage() {
       .then(res => res.json())
       .then(data => {
         clearTimeout(timeoutId);
-        const imagesToUse = data.images && data.images.length > 0 ? data.images : category.colors;
+        const imagesToUse = data.images && data.images.length > 0 ? data.images : colorUrls;
         setImages(imagesToUse);
         setIsLoading(false);
       })
       .catch(() => {
         clearTimeout(timeoutId);
-        setImages(category.colors);
+        setImages(colorUrls);
         setIsLoading(false);
       });
 
@@ -295,7 +297,7 @@ export default function CategoryPage() {
                         </div>
                         <div className="p-3">
                           <p className="text-sm font-medium text-gray-700 truncate">
-                            Mã: {image.split('/').pop()?.split('.')[0]}
+                            {image.split('/').pop()?.split('.')[0]}
                           </p>
                         </div>
                       </button>

@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight } from 'lucide-react';
 import { useState } from 'react';
+import { imageUrl, type ProductImage } from '@/lib/products';
 
 interface ProductCardProps {
   name: string;
@@ -14,11 +15,12 @@ interface ProductCardProps {
   originalPrice?: string;
   discountedPrice?: string;
   colorCount?: number;
-  colors?: string[];
+  colors?: Array<string | ProductImage>;
 }
 
 export default function ProductCard({ name, image, slug, shortDescription, priceRange, originalPrice, discountedPrice, colorCount, colors }: ProductCardProps) {
   const [selectedImage, setSelectedImage] = useState(image);
+  const colorUrls = colors?.map(imageUrl) ?? [];
 
   return (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-500 border border-gray-100 h-full flex flex-col group">
@@ -69,28 +71,28 @@ export default function ProductCard({ name, image, slug, shortDescription, price
               </div>
             )}
             
-            {colors && colors.length > 0 && (
+            {colorUrls.length > 0 && (
               <div>
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-xs text-gray-500 font-medium">Màu sắc</span>
-                  {colorCount && colorCount > colors.length && (
-                    <span className="text-xs text-gray-400">+{colorCount - colors.length} màu khác</span>
+                  {colorCount && colorCount > colorUrls.length && (
+                    <span className="text-xs text-gray-400">+{colorCount - colorUrls.length} màu khác</span>
                   )}
                 </div>
                 <div className="flex gap-2 mb-3">
-                  {colors.slice(0, 4).map((color, idx) => (
+                  {colorUrls.slice(0, 4).map((url, idx) => (
                     <button
                       key={idx}
                       onClick={(e) => {
                         e.preventDefault();
-                        setSelectedImage(color);
+                        setSelectedImage(url);
                       }}
                       className={`relative w-12 h-12 rounded-lg overflow-hidden border-2 transition-all cursor-pointer ${
-                        selectedImage === color ? 'border-amber-500 ring-2 ring-amber-200' : 'border-gray-200 hover:border-amber-400'
+                        selectedImage === url ? 'border-amber-500 ring-2 ring-amber-200' : 'border-gray-200 hover:border-amber-400'
                       }`}
                     >
                       <Image
-                        src={color}
+                        src={url}
                         alt={`Màu ${idx + 1}`}
                         fill
                         sizes="48px"

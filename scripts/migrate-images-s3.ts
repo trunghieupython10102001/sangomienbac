@@ -103,7 +103,10 @@ async function main() {
   const updatedCategories = categories.map((cat) => ({
     ...cat,
     image: urlMap[cat.image] || cat.image,
-    colors: cat.colors.map((color) => urlMap[color] || color),
+    colors: cat.colors.map((color) => {
+      if (typeof color === 'string') return urlMap[color] || color;
+      return { ...color, url: urlMap[color.url] || color.url };
+    }),
   }));
 
   // 4. Save updated data to S3

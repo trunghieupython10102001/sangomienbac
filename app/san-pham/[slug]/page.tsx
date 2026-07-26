@@ -1,6 +1,8 @@
 'use client';
 
-import { categories as staticCategories, Category, imageUrl } from "@/lib/products";
+import { categories as staticCategories, Category, imageUrl, imageName } from "@/lib/products";
+
+type ImageEntry = { url: string; name: string };
 import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +15,7 @@ export default function CategoryPage() {
   const slug = params.slug as string;
   const [allCategories, setAllCategories] = useState<Category[]>(staticCategories);
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<ImageEntry[]>([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [showAllImages, setShowAllImages] = useState(false);
@@ -32,11 +34,14 @@ export default function CategoryPage() {
   useEffect(() => {
     if (!category) return;
 
-    const colorUrls = category.colors.map(imageUrl);
+    const colorEntries: ImageEntry[] = category.colors.map((c) => ({
+      url: imageUrl(c),
+      name: imageName(c),
+    }));
 
     const timeoutId = setTimeout(() => {
       if (isLoading) {
-        setImages(colorUrls);
+        setImages(colorEntries);
         setIsLoading(false);
       }
     }, 2000);
@@ -45,13 +50,13 @@ export default function CategoryPage() {
       .then(res => res.json())
       .then(data => {
         clearTimeout(timeoutId);
-        const imagesToUse = data.images && data.images.length > 0 ? data.images : colorUrls;
-        setImages(imagesToUse);
+        const apiImages: ImageEntry[] = data.images && data.images.length > 0 ? data.images : colorEntries;
+        setImages(apiImages);
         setIsLoading(false);
       })
       .catch(() => {
         clearTimeout(timeoutId);
-        setImages(colorUrls);
+        setImages(colorEntries);
         setIsLoading(false);
       });
 
@@ -273,7 +278,7 @@ export default function CategoryPage() {
               ) : images.length > 0 ? (
                 <>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                    {(showAllImages ? images : images.slice(0, initialImageCount)).map((image, index) => (
+                    {(showAllImages ? images : images.slice(0, initialImageCount)).map((img, index) => (
                       <button
                         key={index}
                         onClick={() => setSelectedImageIndex(index)}
@@ -281,8 +286,8 @@ export default function CategoryPage() {
                       >
                         <div className="relative h-64">
                           <Image
-                            src={image}
-                            alt={`${category.name} ${index + 1}`}
+                            src={img.url}
+                            alt={img.name || `${category.name} ${index + 1}`}
                             fill
                             className="object-contain group-hover:scale-105 transition-transform duration-500"
                             sizes="(max-width: 768px) 50vw, 33vw"
@@ -297,7 +302,7 @@ export default function CategoryPage() {
                         </div>
                         <div className="p-3">
                           <p className="text-sm font-medium text-gray-700 truncate">
-                            {image.split('/').pop()?.split('.')[0]}
+                            {img.name}
                           </p>
                         </div>
                       </button>
@@ -360,7 +365,7 @@ export default function CategoryPage() {
       {/* Image Viewer Modal */}
       {selectedImageIndex !== null && (
         <ImageViewer
-          images={images}
+          images={images.map((i) => i.url)}
           currentIndex={selectedImageIndex}
           onClose={() => setSelectedImageIndex(null)}
           onNavigate={setSelectedImageIndex}

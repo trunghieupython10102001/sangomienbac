@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
 import { getContent } from '@/lib/s3-storage';
-import { imageUrl, type Category } from '@/lib/products';
+import { imageUrl, imageName, type Category } from '@/lib/products';
 
 const categoryMap: Record<string, string> = {
   'san-go-cao-cap-malaysia': 'Sàn gỗ cao cấp Malaysia ',
@@ -33,7 +33,9 @@ export async function GET(
   if (products) {
     const product = products.find((p) => p.slug === slug);
     if (product && product.colors && product.colors.length > 0) {
-      return NextResponse.json({ images: product.colors.map(imageUrl) });
+      return NextResponse.json({
+        images: product.colors.map((c) => ({ url: imageUrl(c), name: imageName(c) })),
+      });
     }
   }
 
@@ -48,7 +50,10 @@ export async function GET(
     const files = fs.readdirSync(publicDir);
     const imageFiles = files.filter((file) => /\.(jpg|jpeg|png|webp|gif)$/i.test(file));
     return NextResponse.json({
-      images: imageFiles.map((file) => `/products/${folderName}/${file}`),
+      images: imageFiles.map((file) => ({
+        url: `/products/${folderName}/${file}`,
+        name: file.replace(/\.[^.]+$/, ''),
+      })),
     });
   } catch {
     return NextResponse.json({ images: [] });

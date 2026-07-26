@@ -2,6 +2,19 @@ import Image from 'next/image';
 import { Flame } from 'lucide-react';
 import { getBestSellers } from '@/lib/site-data';
 
+/** Numeric value of a price string, e.g. "590.000" → 590000. */
+function toNum(s?: string): number {
+  const n = Number((s ?? '').replace(/[^\d]/g, ''));
+  return Number.isFinite(n) ? n : 0;
+}
+
+/** Discount percentage from original vs current price, or 0 when not applicable. */
+function discountPct(price: string, originalPrice?: string): number {
+  const now = toNum(price);
+  const orig = toNum(originalPrice);
+  return orig > now && now > 0 ? Math.round((1 - now / orig) * 100) : 0;
+}
+
 export default async function BestSellers() {
   const bestSellers = await getBestSellers();
   return (
@@ -38,14 +51,29 @@ export default async function BestSellers() {
                   <Flame className="w-3 h-3" />
                   HOT
                 </div>
+                {discountPct(product.price, product.originalPrice) > 0 && (
+                  <div className="absolute top-2 right-2 bg-gray-900/80 text-white text-xs font-bold px-2 py-1 rounded-md">
+                    -{discountPct(product.price, product.originalPrice)}%
+                  </div>
+                )}
               </div>
               <div className="p-3 md:p-4">
+                {product.name && (
+                  <p className="text-xs text-gray-500 truncate mb-0.5">{product.name}</p>
+                )}
                 <h3 className="font-bold text-gray-900 text-sm md:text-base mb-1">
-                  Mã: {product.code}
+                  {product.code}
                 </h3>
-                <p className="text-red-600 font-bold text-base md:text-lg">
-                  {product.price}đ/m²
-                </p>
+                <div className="flex items-baseline gap-2">
+                  <p className="text-red-600 font-bold text-base md:text-lg">
+                    {product.price}đ/m²
+                  </p>
+                  {discountPct(product.price, product.originalPrice) > 0 && (
+                    <span className="text-xs text-gray-400 line-through">
+                      {product.originalPrice}đ
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           ))}

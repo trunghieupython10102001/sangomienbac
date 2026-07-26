@@ -14,6 +14,10 @@ export interface BestSeller {
   code: string;
   price: string;
   image: string;
+  /** Optional display name shown above the code on the homepage card. */
+  name?: string;
+  /** Optional original (pre-discount) price; shown struck-through with a % badge. */
+  originalPrice?: string;
 }
 
 export interface MediaItem {

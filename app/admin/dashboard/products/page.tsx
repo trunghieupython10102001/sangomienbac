@@ -214,7 +214,7 @@ export default function ProductsAdminPage() {
     : data.length;
 
   return (
-    <div className="max-w-4xl pb-4">
+    <div className="max-w-4xl pb-20">
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Sản phẩm ({data.length})</h1>
@@ -510,9 +510,9 @@ export default function ProductsAdminPage() {
                               </div>
                               <input
                                 type="text"
-                                value={imageName(entry)}
+                                value={typeof entry === 'string' ? '' : (entry.name ?? '')}
                                 onChange={(e) => updateColorName(cat.id, index, e.target.value)}
-                                placeholder={`Ảnh ${index + 1}`}
+                                placeholder={imageName(entry)}
                                 className="w-full rounded border border-gray-200 px-1.5 py-1 text-[11px] text-gray-700 outline-none focus:border-amber-400 focus:ring-1 focus:ring-amber-400"
                               />
                             </div>

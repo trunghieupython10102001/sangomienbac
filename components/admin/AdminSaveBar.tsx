@@ -31,7 +31,7 @@ interface AdminSaveBarProps {
  */
 export default function AdminSaveBar({ dirty, saving, onSave, info }: AdminSaveBarProps) {
   return (
-    <div className="sticky bottom-0 z-20 -mx-6 mt-6 flex items-center justify-between border-t border-gray-200 bg-white/95 px-6 py-3 backdrop-blur">
+    <div className="fixed bottom-0 left-64 right-0 z-20 flex items-center justify-between border-t border-gray-200 bg-white/95 px-6 py-3 backdrop-blur shadow-lg">
       <div className="flex items-center gap-2 text-sm">
         {dirty ? (
           <span className="flex items-center gap-1.5 font-medium text-amber-600">

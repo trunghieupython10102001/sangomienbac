@@ -123,7 +123,7 @@ export default function BestSellersAdminPage() {
   }
 
   return (
-    <div className="max-w-3xl pb-4">
+    <div className="max-w-3xl pb-20">
       <div className="mb-2 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Sản phẩm bán chạy ({data.length})</h1>

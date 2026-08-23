@@ -6,10 +6,16 @@ import {
   defaultBestSellers,
   defaultMediaItems,
   defaultAboutContent,
+  defaultProductGroups,
+  defaultFooterContent,
+  defaultHomeHero,
   type SiteSettings,
   type BestSeller,
   type MediaItem,
   type AboutContent,
+  type ProductGroup,
+  type FooterContent,
+  type HomeHero,
 } from './default-data';
 
 export async function getSiteSettings(): Promise<SiteSettings> {
@@ -40,4 +46,20 @@ export async function getMediaItems(): Promise<MediaItem[]> {
 export async function getAboutContent(): Promise<AboutContent> {
   const data = await getContent<AboutContent>('about');
   return data ?? defaultAboutContent;
+}
+
+export async function getProductGroups(): Promise<ProductGroup[]> {
+  const data = await getContent<ProductGroup[]>('product-groups');
+  return data ?? defaultProductGroups;
+}
+
+export async function getFooterContent(): Promise<FooterContent> {
+  const data = await getContent<FooterContent>('footer');
+  // Merge so a footer.json saved before a field existed still renders it.
+  return { ...defaultFooterContent, ...(data ?? {}) };
+}
+
+export async function getHomeHero(): Promise<HomeHero> {
+  const data = await getContent<HomeHero>('home-hero');
+  return { ...defaultHomeHero, ...(data ?? {}) };
 }

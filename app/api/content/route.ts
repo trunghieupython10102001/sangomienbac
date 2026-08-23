@@ -4,10 +4,13 @@ import { getContent, type ContentKey } from '@/lib/s3-storage';
 const VALID_KEYS: ContentKey[] = [
   'site-settings',
   'products',
+  'product-groups',
   'best-sellers',
   'news',
   'media',
   'about',
+  'footer',
+  'home-hero',
 ];
 
 export async function GET(request: NextRequest) {

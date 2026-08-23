@@ -8,6 +8,62 @@ export interface SiteSettings {
   tagline: string;
   facebookUrl: string;
   zaloUrl: string;
+  /** Optional so settings saved before TikTok existed still parse. */
+  tiktokUrl?: string;
+}
+
+/**
+ * A grouping layer above `Category` — "Sàn gỗ công nghiệp", "Phụ kiện"…
+ * Members are referenced by category slug so a group never duplicates
+ * product data.
+ */
+export interface ProductGroup {
+  id: string;
+  name: string;
+  slug: string;
+  shortDescription: string;
+  /** Blank falls back to the first member category's image. */
+  image: string;
+  categorySlugs: string[];
+}
+
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
+export interface FooterContent {
+  description: string;
+  quickLinksTitle: string;
+  quickLinks: FooterLink[];
+  contactTitle: string;
+  hoursTitle: string;
+  ctaTitle: string;
+  ctaSubtitle: string;
+  copyright: string;
+  credit: string;
+}
+
+export interface HeroCta {
+  label: string;
+  href: string;
+}
+
+export interface HeroHighlight {
+  title: string;
+  description: string;
+}
+
+export interface HomeHero {
+  enabled: boolean;
+  badge: string;
+  title: string;
+  description: string;
+  /** Blank renders the hero centred full-width instead of two columns. */
+  image: string;
+  primaryCta: HeroCta;
+  secondaryCta: HeroCta;
+  highlights: HeroHighlight[];
 }
 
 export interface BestSeller {
@@ -47,8 +103,106 @@ export const defaultSiteSettings: SiteSettings = {
   workingHours: 'Thứ 2 - Chủ nhật: 8:00 - 18:00',
   slogan: 'Tư vấn miễn phí - Thi công chuyên nghiệp',
   tagline: 'Chất lượng - Uy tín - Giá tốt',
-  facebookUrl: '#',
-  zaloUrl: '#',
+  facebookUrl: 'https://www.facebook.com/Khosangomienbac',
+  zaloUrl: 'https://zalo.me/0363974768',
+  tiktokUrl: '',
+};
+
+export const defaultProductGroups: ProductGroup[] = [
+  {
+    id: '1',
+    name: 'Sàn gỗ công nghiệp',
+    slug: 'san-go-cong-nghiep',
+    shortDescription:
+      'Các dòng sàn gỗ công nghiệp cốt xanh, cốt đen, xương cá — bền đẹp, chịu nước, phù hợp mọi không gian.',
+    image: '',
+    categorySlugs: [
+      'san-go-cot-xanh',
+      'san-go-cao-cap-malaysia',
+      'san-go-cot-den-cao-cap',
+      'san-go-xuong-ca',
+      'san-go-cot-den-viet-nam',
+      'san-go-cong-nghe-duc',
+      'san-go-cot-nau',
+      'san-go-chau-au',
+      'san-go-8mm-viet-nam',
+    ],
+  },
+  {
+    id: '2',
+    name: 'Sàn nhựa trong nhà',
+    slug: 'san-nhua-trong-nha',
+    shortDescription:
+      'Sàn nhựa SPC hèm khóa chống nước tuyệt đối, thi công nhanh, phù hợp căn hộ và nhà phố hiện đại.',
+    image: '',
+    categorySlugs: [
+      'san-nhua-7-5mm-spc-cao-cap',
+      'san-nhua-4mm-spc-cao-cap',
+      'san-nhua-xuong-ca-spc-cao-cap',
+    ],
+  },
+  {
+    id: '3',
+    name: 'Tấm ốp nội thất',
+    slug: 'tam-op-noi-that',
+    shortDescription:
+      'Tấm ốp tường, ốp trần nano hoàn thiện nhanh, chống ẩm mốc, nâng tầm không gian sống.',
+    image: '',
+    categorySlugs: ['tam-op-noi-that'],
+  },
+  {
+    id: '4',
+    name: 'Phụ kiện',
+    slug: 'phu-kien',
+    shortDescription:
+      'Phào, nẹp và các phụ kiện hỗ trợ thi công, giúp công trình hoàn thiện khít khao và bền lâu.',
+    image: '',
+    categorySlugs: ['phu-kien-phao-nep'],
+  },
+  {
+    id: '5',
+    name: 'Xốp lót',
+    slug: 'xop-lot',
+    shortDescription:
+      'Xốp lót và cao su non — lớp nền quan trọng giúp sàn êm chân, cách âm và chống ẩm từ nền.',
+    image: '',
+    categorySlugs: ['xop-lot-cao-su-non'],
+  },
+];
+
+export const defaultFooterContent: FooterContent = {
+  description:
+    'Chuyên cung cấp và thi công sàn gỗ công nghiệp, sàn nhựa cao cấp với giá tốt nhất thị trường.',
+  quickLinksTitle: 'Liên kết nhanh',
+  quickLinks: [
+    { label: 'Trang chủ', href: '/' },
+    { label: 'Về chúng tôi', href: '/gioi-thieu' },
+    { label: 'Sản phẩm', href: '/san-pham' },
+    { label: 'Tin tức', href: '/tin-tuc' },
+    { label: 'Báo giá', href: '/bao-gia' },
+    { label: 'Liên hệ', href: '/lien-he' },
+  ],
+  contactTitle: 'Liên hệ',
+  hoursTitle: 'Giờ làm việc',
+  ctaTitle: 'Tư vấn 24/7',
+  ctaSubtitle: 'Luôn sẵn sàng hỗ trợ bạn',
+  copyright: '© 2024 Kho sàn gỗ Miền Bắc. All rights reserved.',
+  credit: 'Designed with ❤️ for quality flooring',
+};
+
+export const defaultHomeHero: HomeHero = {
+  enabled: true,
+  badge: 'PHÂN PHỐI & THI CÔNG TRỌN GÓI',
+  title: 'Kho Sàn Gỗ Miền Bắc – Đơn vị cung cấp sàn gỗ, sàn nhựa giá tại kho',
+  description:
+    'Chúng tôi cung cấp và trực tiếp thi công sàn gỗ công nghiệp, sàn nhựa SPC chịu nước, nhập khẩu Malaysia, Bỉ và Thổ Nhĩ Kỳ. Tư vấn tận nơi, báo giá chân thực, đảm bảo mức giá gốc từ nhà kho tiết kiệm tối ưu chi phí.',
+  image: '',
+  primaryCta: { label: 'Xem sản phẩm', href: '/san-pham' },
+  secondaryCta: { label: 'Nhận tư vấn chọn sàn', href: '/lien-he' },
+  highlights: [
+    { title: 'Tư vấn mẫu theo mặt bằng', description: 'Báo giá thực tế không phát sinh' },
+    { title: 'Hỗ trợ thi công trọn gói', description: 'Nhanh chóng, đúng tiến độ cam kết' },
+  ],
 };
 
 export const defaultBestSellers: BestSeller[] = [

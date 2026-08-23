@@ -6,10 +6,13 @@ import { getContent, setContent, type ContentKey } from '@/lib/s3-storage';
 const VALID_KEYS: ContentKey[] = [
   'site-settings',
   'products',
+  'product-groups',
   'best-sellers',
   'news',
   'media',
   'about',
+  'footer',
+  'home-hero',
 ];
 
 // Server-rendered pages read content through the AWS SDK (not `fetch`), so
@@ -17,11 +20,19 @@ const VALID_KEYS: ContentKey[] = [
 // routes that render each content key so the next visit re-reads S3.
 const REVALIDATE_PATHS: Record<ContentKey, Array<{ path: string; type?: 'page' | 'layout' }>> = {
   'site-settings': [{ path: '/' }, { path: '/lien-he' }],
-  'products': [{ path: '/' }, { path: '/san-pham' }],
+  'products': [{ path: '/' }, { path: '/san-pham' }, { path: '/danh-muc/[slug]', type: 'page' }],
+  'product-groups': [
+    { path: '/' },
+    { path: '/san-pham' },
+    { path: '/danh-muc/[slug]', type: 'page' },
+  ],
   'best-sellers': [{ path: '/' }],
   'news': [{ path: '/tin-tuc' }, { path: '/tin-tuc/[slug]', type: 'page' }],
   'about': [{ path: '/gioi-thieu' }],
   'media': [{ path: '/video-hinh-anh' }],
+  // The footer renders inside the shared shell, so every route caches it.
+  'footer': [{ path: '/', type: 'layout' }],
+  'home-hero': [{ path: '/' }],
 };
 
 async function isAuthenticated(): Promise<boolean> {

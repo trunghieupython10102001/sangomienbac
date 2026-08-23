@@ -1,14 +1,32 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ClipboardList } from 'lucide-react';
 import ContactFormModal from './ContactFormModal';
+
+/** How long a visitor browses before the consultation form invites itself in. */
+const AUTO_OPEN_DELAY_MS = 30_000;
+const AUTO_OPEN_FLAG = 'consult-popup-shown';
 
 export default function MessengerButtons() {
   const [showZaloOptions, setShowZaloOptions] = useState(false);
   const [showContactForm, setShowContactForm] = useState(false);
-  
+
+  // Open the consultation form once per browsing session. sessionStorage (not
+  // localStorage) means it returns for a genuinely new visit but never nags
+  // someone clicking through several pages.
+  useEffect(() => {
+    if (sessionStorage.getItem(AUTO_OPEN_FLAG)) return;
+
+    const timer = setTimeout(() => {
+      sessionStorage.setItem(AUTO_OPEN_FLAG, '1');
+      setShowContactForm(true);
+    }, AUTO_OPEN_DELAY_MS);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   const facebookPageId = 'Khosangomienbac';
   const zaloPhoneNumbers = ['0363974768', '0969897297'];
 

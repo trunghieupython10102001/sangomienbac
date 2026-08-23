@@ -11,16 +11,22 @@ import {
   Info,
   LogOut,
   LayoutDashboard,
+  LayoutGrid,
+  PanelTop,
+  PanelBottom,
 } from 'lucide-react';
 
 const menuItems = [
   { href: '/admin/dashboard', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/dashboard/site-settings', label: 'Thông tin cửa hàng', icon: Settings },
+  { href: '/admin/dashboard/home-hero', label: 'Hero trang chủ', icon: PanelTop },
+  { href: '/admin/dashboard/product-groups', label: 'Danh mục sản phẩm', icon: LayoutGrid },
   { href: '/admin/dashboard/products', label: 'Sản phẩm', icon: Package },
   { href: '/admin/dashboard/best-sellers', label: 'Bán chạy', icon: Flame },
   { href: '/admin/dashboard/news', label: 'Tin tức', icon: Newspaper },
   { href: '/admin/dashboard/media', label: 'Video & Hình ảnh', icon: Image },
   { href: '/admin/dashboard/about', label: 'Giới thiệu', icon: Info },
+  { href: '/admin/dashboard/footer', label: 'Footer', icon: PanelBottom },
 ];
 
 export default function DashboardLayout({

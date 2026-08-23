@@ -1,11 +1,14 @@
 import ProductCard from "@/components/ProductCard";
 import BestSellers from "@/components/BestSellers";
+import ProductGroups from "@/components/ProductGroups";
 import { getProducts } from "@/lib/site-data";
 
 export default async function ProductsPage() {
   const categories = await getProducts();
   return (
     <div className="min-h-screen">
+      <ProductGroups />
+
       <BestSellers />
 
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">

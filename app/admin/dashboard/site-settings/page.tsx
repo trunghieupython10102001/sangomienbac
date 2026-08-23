@@ -137,6 +137,17 @@ export default function SiteSettingsPage() {
         </div>
 
         <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">TikTok URL</label>
+          <input
+            type="text"
+            value={data.tiktokUrl ?? ''}
+            onChange={(e) => setData({ ...data, tiktokUrl: e.target.value })}
+            placeholder="https://www.tiktok.com/@..."
+            className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
+          />
+        </div>
+
+        <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Zalo URL</label>
           <input
             type="text"
@@ -145,6 +156,10 @@ export default function SiteSettingsPage() {
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none text-gray-900"
           />
         </div>
+
+        <p className="text-xs text-gray-500">
+          Link mạng xã hội để trống sẽ tự ẩn khỏi footer.
+        </p>
       </div>
     </div>
   );

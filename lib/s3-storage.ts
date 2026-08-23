@@ -5,10 +5,13 @@ const CONTENT_PREFIX = 'site-content/';
 export type ContentKey =
   | 'site-settings'
   | 'products'
+  | 'product-groups'
   | 'best-sellers'
   | 'news'
   | 'media'
-  | 'about';
+  | 'about'
+  | 'footer'
+  | 'home-hero';
 
 export async function getContent<T>(key: ContentKey): Promise<T | null> {
   return getObjectJson<T>(`${CONTENT_PREFIX}${key}.json`);

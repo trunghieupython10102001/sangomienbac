@@ -1,6 +1,8 @@
 import Link from "next/link";
 import ProductCard from "@/components/ProductCard";
 import BestSellers from "@/components/BestSellers";
+import HomeHero from "@/components/HomeHero";
+import ProductGroups from "@/components/ProductGroups";
 import { Phone, CheckCircle, Award, Truck } from "lucide-react";
 import { getProducts, getSiteSettings } from "@/lib/site-data";
 
@@ -8,6 +10,10 @@ export default async function Home() {
   const [categories, settings] = await Promise.all([getProducts(), getSiteSettings()]);
   return (
     <div className="min-h-screen">
+
+      <HomeHero />
+
+      <ProductGroups />
 
       <BestSellers />
 

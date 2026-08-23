@@ -43,12 +43,12 @@ export default async function ProductGroupPage({ params }: PageProps) {
         <div className="container mx-auto px-4">
           <Link
             href="/san-pham"
-            className="inline-flex items-center gap-2 text-gray-300 hover:text-amber-400 transition-colors mb-6"
+            className="flex w-fit items-center gap-2 text-gray-300 hover:text-amber-400 transition-colors mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
             Tất cả sản phẩm
           </Link>
-          <div className="inline-block text-amber-400 tracking-widest text-xs font-bold mb-3">
+          <div className="block text-amber-400 tracking-widest text-xs font-bold mb-3">
             DANH MỤC SẢN PHẨM
           </div>
           <h1 className="text-3xl md:text-5xl font-bold mb-4">{group.name}</h1>

@@ -133,3 +133,8 @@ header.scrolled .logo-tagline {
 :where(.rich-html) table { width: 100%; border-collapse: collapse; font-size: 0.875rem; display: block; overflow-x: auto; }
 :where(.rich-html) th, :where(.rich-html) td { border: 1px solid #e5e7eb; padding: 0.5rem 0.75rem; text-align: left; }
 :where(.rich-html) th { background: #fffbeb; font-weight: 600; }
+
+/* Rich text editor (admin) — selection outlines for images and tables. */
+.ProseMirror img.ProseMirror-selectednode { outline: 3px solid #f59e0b; }
+.ProseMirror .selectedCell { background: #fef3c7; }
+.ProseMirror table { display: table; }

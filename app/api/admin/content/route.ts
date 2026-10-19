@@ -13,6 +13,8 @@ const VALID_KEYS: ContentKey[] = [
   'about',
   'footer',
   'home-hero',
+  'custom-html',
+  'section-html',
 ];
 
 // Server-rendered pages read content through the AWS SDK (not `fetch`), so
@@ -33,6 +35,9 @@ const REVALIDATE_PATHS: Record<ContentKey, Array<{ path: string; type?: 'page' |
   // The footer renders inside the shared shell, so every route caches it.
   'footer': [{ path: '/', type: 'layout' }],
   'home-hero': [{ path: '/' }],
+  // Both are read by the root layout, so every route caches them.
+  'custom-html': [{ path: '/', type: 'layout' }],
+  'section-html': [{ path: '/', type: 'layout' }],
 };
 
 async function isAuthenticated(): Promise<boolean> {

@@ -370,3 +370,39 @@ export const defaultAboutContent: AboutContent = {
     },
   ],
 };
+
+/** Where a custom HTML block is injected in the public site shell. */
+export type CustomHtmlPosition = 'after-header' | 'before-footer';
+
+export interface CustomHtmlBlock {
+  id: string;
+  name: string;
+  html: string;
+  position: CustomHtmlPosition;
+  /** Comma-separated paths (e.g. "/, /san-pham"). Empty = every page. */
+  paths: string;
+  enabled: boolean;
+}
+
+export const defaultCustomHtml: CustomHtmlBlock[] = [];
+
+/** Built-in sections the admin can swap out for raw HTML. */
+export type SectionHtmlKey =
+  | 'header'
+  | 'footer'
+  | 'home-hero'
+  | 'home-product-groups'
+  | 'home-best-sellers'
+  | 'home-categories'
+  | 'home-features'
+  | 'home-cta'
+  | 'about-page';
+
+export interface SectionHtmlOverride {
+  enabled: boolean;
+  html: string;
+}
+
+export type SectionHtml = Partial<Record<SectionHtmlKey, SectionHtmlOverride>>;
+
+export const defaultSectionHtml: SectionHtml = {};

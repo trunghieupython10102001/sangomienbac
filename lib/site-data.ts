@@ -9,6 +9,8 @@ import {
   defaultProductGroups,
   defaultFooterContent,
   defaultHomeHero,
+  defaultCustomHtml,
+  defaultSectionHtml,
   type SiteSettings,
   type BestSeller,
   type MediaItem,
@@ -16,6 +18,8 @@ import {
   type ProductGroup,
   type FooterContent,
   type HomeHero,
+  type CustomHtmlBlock,
+  type SectionHtml,
 } from './default-data';
 
 export async function getSiteSettings(): Promise<SiteSettings> {
@@ -62,4 +66,14 @@ export async function getFooterContent(): Promise<FooterContent> {
 export async function getHomeHero(): Promise<HomeHero> {
   const data = await getContent<HomeHero>('home-hero');
   return { ...defaultHomeHero, ...(data ?? {}) };
+}
+
+export async function getCustomHtml(): Promise<CustomHtmlBlock[]> {
+  const data = await getContent<CustomHtmlBlock[]>('custom-html');
+  return Array.isArray(data) ? data : defaultCustomHtml;
+}
+
+export async function getSectionHtml(): Promise<SectionHtml> {
+  const data = await getContent<SectionHtml>('section-html');
+  return { ...defaultSectionHtml, ...(data ?? {}) };
 }

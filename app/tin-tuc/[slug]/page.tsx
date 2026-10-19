@@ -1,4 +1,6 @@
 import { getNewsArticles } from "@/lib/site-data";
+import { HtmlContent } from "@/components/HtmlContent";
+import { isHtml } from "@/lib/html";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -65,6 +67,9 @@ export default async function NewsDetailPage({ params }: PageProps) {
             </div>
           )}
 
+          {isHtml(article.content) ? (
+            <HtmlContent html={article.content} className="rich-html text-lg text-gray-700" />
+          ) : (
           <div className="prose prose-lg max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-strong:text-gray-900 prose-li:text-gray-700">
             {article.content.split("\n").map((paragraph, index) => {
               if (paragraph.startsWith("## ")) {
@@ -164,6 +169,7 @@ export default async function NewsDetailPage({ params }: PageProps) {
               );
             })}
           </div>
+          )}
 
           {article.images.length > 1 && (
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">

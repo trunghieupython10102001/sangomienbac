@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Loader2, Plus, Trash2 } from 'lucide-react';
 import { fetchContent, saveContent } from '@/lib/admin-helpers';
+import HtmlField from '@/components/admin/HtmlField';
 import { defaultHomeHero, type HomeHero, type HeroHighlight } from '@/lib/default-data';
 import UploadInput from '@/components/admin/UploadInput';
 import AdminSaveBar, { useUnsavedWarning } from '@/components/admin/AdminSaveBar';
@@ -122,15 +123,13 @@ export default function HomeHeroAdminPage() {
           />
         </div>
 
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">Mô tả</label>
-          <textarea
-            value={data.description}
-            onChange={(e) => commit({ description: e.target.value })}
-            rows={4}
-            className={inputClass}
-          />
-        </div>
+        <HtmlField
+          label="Mô tả"
+          value={data.description}
+          onChange={(description) => commit({ description })}
+          rows={4}
+          previewClassName="bg-gray-900 text-gray-300"
+        />
 
         <UploadInput
           label="Ảnh minh họa (để trống sẽ căn giữa toàn chiều rộng)"

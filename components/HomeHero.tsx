@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Check } from 'lucide-react';
 import { getHomeHero } from '@/lib/site-data';
+import { RichText } from './HtmlContent';
 
 /**
  * Homepage intro banner. Deliberately has no video: when the admin has not
@@ -36,13 +37,12 @@ export default async function HomeHero() {
             <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-6">{hero.title}</h1>
 
             {hero.description && (
-              <p
+              <RichText
+                text={hero.description}
                 className={`text-base md:text-lg text-gray-300 leading-relaxed mb-8 ${
                   hasImage ? '' : 'mx-auto'
                 }`}
-              >
-                {hero.description}
-              </p>
+              />
             )}
 
             <div className={`flex flex-col sm:flex-row gap-4 ${hasImage ? '' : 'justify-center'}`}>

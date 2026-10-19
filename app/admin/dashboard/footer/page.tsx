@@ -5,6 +5,7 @@ import { Loader2, Plus, Trash2, ArrowUp, ArrowDown } from 'lucide-react';
 import { fetchContent, saveContent } from '@/lib/admin-helpers';
 import { defaultFooterContent, type FooterContent, type FooterLink } from '@/lib/default-data';
 import AdminSaveBar, { useUnsavedWarning } from '@/components/admin/AdminSaveBar';
+import HtmlField from '@/components/admin/HtmlField';
 
 const inputClass =
   'w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500';
@@ -100,15 +101,13 @@ export default function FooterAdminPage() {
       )}
 
       <div className="space-y-5 rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">Mô tả cửa hàng</label>
-          <textarea
-            value={data.description}
-            onChange={(e) => commit({ description: e.target.value })}
-            rows={3}
-            className={inputClass}
-          />
-        </div>
+        <HtmlField
+          label="Mô tả cửa hàng"
+          value={data.description}
+          onChange={(description) => commit({ description })}
+          rows={3}
+          previewClassName="bg-gray-900 text-gray-400"
+        />
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <div>

@@ -11,7 +11,9 @@ export type ContentKey =
   | 'media'
   | 'about'
   | 'footer'
-  | 'home-hero';
+  | 'home-hero'
+  | 'custom-html'
+  | 'section-html';
 
 export async function getContent<T>(key: ContentKey): Promise<T | null> {
   return getObjectJson<T>(`${CONTENT_PREFIX}${key}.json`);

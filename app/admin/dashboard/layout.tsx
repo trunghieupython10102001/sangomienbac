@@ -14,6 +14,8 @@ import {
   LayoutGrid,
   PanelTop,
   PanelBottom,
+  Code,
+  Layers,
 } from 'lucide-react';
 
 const menuItems = [
@@ -27,6 +29,8 @@ const menuItems = [
   { href: '/admin/dashboard/media', label: 'Video & Hình ảnh', icon: Image },
   { href: '/admin/dashboard/about', label: 'Giới thiệu', icon: Info },
   { href: '/admin/dashboard/footer', label: 'Footer', icon: PanelBottom },
+  { href: '/admin/dashboard/custom-html', label: 'HTML tùy chỉnh', icon: Code },
+  { href: '/admin/dashboard/section-html', label: 'Thay phần bằng HTML', icon: Layers },
 ];
 
 export default function DashboardLayout({

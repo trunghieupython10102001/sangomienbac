@@ -4,19 +4,31 @@ import BestSellers from "@/components/BestSellers";
 import HomeHero from "@/components/HomeHero";
 import ProductGroups from "@/components/ProductGroups";
 import { Phone, CheckCircle, Award, Truck } from "lucide-react";
-import { getProducts, getSiteSettings } from "@/lib/site-data";
+import { Section } from "@/components/Section";
+import { getProducts, getSectionHtml, getSiteSettings } from "@/lib/site-data";
 
 export default async function Home() {
-  const [categories, settings] = await Promise.all([getProducts(), getSiteSettings()]);
+  const [categories, settings, sections] = await Promise.all([
+    getProducts(),
+    getSiteSettings(),
+    getSectionHtml(),
+  ]);
   return (
     <div className="min-h-screen">
 
-      <HomeHero />
+      <Section id="home-hero" overrides={sections}>
+        <HomeHero />
+      </Section>
 
-      <ProductGroups />
+      <Section id="home-product-groups" overrides={sections}>
+        <ProductGroups />
+      </Section>
 
-      <BestSellers />
+      <Section id="home-best-sellers" overrides={sections}>
+        <BestSellers />
+      </Section>
 
+      <Section id="home-categories" overrides={sections}>
       <section className="py-20 bg-gradient-to-b from-gray-50 to-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
@@ -48,7 +60,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      </Section>
 
+      <Section id="home-features" overrides={sections}>
       <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -82,7 +96,9 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      </Section>
 
+      <Section id="home-cta" overrides={sections}>
       <section className="py-20 bg-gradient-to-br from-amber-600 via-amber-700 to-orange-600 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4xIj48cGF0aCBkPSJNMzYgMzRjMy4zMSAwIDYtMi42OSA2LTZzLTIuNjktNi02LTYtNiAyLjY5LTYgNiAyLjY5IDYgNiA2em0tMTIgNmMyLjIxIDAgNC0xLjc5IDQtNHMtMS43OS00LTQtNC00IDEuNzktNCA0IDEuNzkgNCA0IDR6bTI0IDI0YzMuMzEgMCA2LTIuNjkgNi02cy0yLjY5LTYtNi02LTYgMi42OS02IDYgMi42OSA2IDYgNnoiLz48L2c+PC9nPjwvc3ZnPg==')] opacity-30"></div>
         <div className="container mx-auto px-4 text-center relative z-10">
@@ -115,6 +131,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
+      </Section>
     </div>
   );
 }

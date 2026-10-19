@@ -11,6 +11,8 @@ const VALID_KEYS: ContentKey[] = [
   'about',
   'footer',
   'home-hero',
+  'custom-html',
+  'section-html',
 ];
 
 export async function GET(request: NextRequest) {

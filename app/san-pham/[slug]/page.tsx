@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Phone, ArrowLeft, Info, Ruler, Package, Layers, Droplets, Shield, Wrench, Sparkles, ArrowLeftRight, Box } from "lucide-react";
 import { useState, useEffect } from "react";
 import ImageViewer from "@/components/ImageViewer";
+import { RichText } from "@/components/HtmlContent";
 
 export default function CategoryPage() {
   const params = useParams();
@@ -323,6 +324,13 @@ export default function CategoryPage() {
               ) : (
                 <div className="text-center py-20 bg-gray-50 rounded-2xl">
                   <p className="text-gray-600 text-lg">Đang cập nhật hình ảnh sản phẩm...</p>
+                </div>
+              )}
+
+              {category.description && (
+                <div className="mt-8 bg-white rounded-2xl shadow-lg p-6">
+                  <h2 className="text-2xl font-bold mb-4 text-gray-900">Mô tả sản phẩm</h2>
+                  <RichText text={category.description} className="text-gray-700 leading-relaxed" />
                 </div>
               )}
             </div>

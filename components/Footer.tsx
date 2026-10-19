@@ -4,6 +4,7 @@ import { Phone, Mail, MapPin, Facebook, MessageCircle, Clock } from 'lucide-reac
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import { RichText } from './HtmlContent';
 import {
   defaultSiteSettings,
   defaultFooterContent,
@@ -60,7 +61,7 @@ export default function Footer() {
               </div>
               <h3 className="text-2xl font-bold text-white">{settings.shopName}</h3>
             </div>
-            <p className="text-gray-400 mb-6 leading-relaxed">{content.description}</p>
+            <RichText text={content.description} className="text-gray-400 mb-6 leading-relaxed" />
             <div className="flex space-x-3">
               {socials.map((social) => (
                 <a

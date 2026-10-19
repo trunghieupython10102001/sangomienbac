@@ -1,10 +1,12 @@
 import Image from "next/image";
 import { CheckCircle, Award, Users, Truck, Star, Shield } from "lucide-react";
-import { getAboutContent } from "@/lib/site-data";
+import { Section } from "@/components/Section";
+import { getAboutContent, getSectionHtml } from "@/lib/site-data";
 
 export default async function AboutPage() {
-  const about = await getAboutContent();
+  const [about, sections] = await Promise.all([getAboutContent(), getSectionHtml()]);
   return (
+    <Section id="about-page" overrides={sections}>
     <div className="min-h-screen">
       <section className="py-20 bg-gradient-to-b from-amber-50 via-white to-gray-50">
         <div className="container mx-auto px-4">
@@ -376,5 +378,6 @@ export default async function AboutPage() {
         </div>
       </section>
     </div>
+    </Section>
   );
 }

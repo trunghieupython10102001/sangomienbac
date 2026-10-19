@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Save, Loader2, Plus, Trash2, ChevronDown, ChevronUp } from 'lucide-react';
 import { fetchContent, saveContent } from '@/lib/admin-helpers';
+import HtmlField from '@/components/admin/HtmlField';
 import { newsArticles as staticNews, type NewsArticle } from '@/lib/news';
 import UploadInput from '@/components/admin/UploadInput';
 import MultiUploadInput from '@/components/admin/MultiUploadInput';
@@ -167,15 +168,12 @@ export default function NewsAdminPage() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Nội dung (Markdown)</label>
-                  <textarea
-                    value={article.content}
-                    onChange={(e) => updateArticle(article.id, { content: e.target.value })}
-                    rows={12}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 outline-none font-mono text-sm text-gray-900"
-                  />
-                </div>
+                <HtmlField
+                  label="Nội dung"
+                  value={article.content}
+                  onChange={(content) => updateArticle(article.id, { content })}
+                  rows={12}
+                />
 
                 <MultiUploadInput
                   label={`Ảnh bài viết (${article.images.length} ảnh)`}

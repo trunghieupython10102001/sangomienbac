@@ -19,6 +19,7 @@ import {
 import { fetchContent, saveContent, uploadFile } from '@/lib/admin-helpers';
 import { categories as staticCategories, type Category, type ProductImage, imageUrl, imageName } from '@/lib/products';
 import UploadInput from '@/components/admin/UploadInput';
+import HtmlField from '@/components/admin/HtmlField';
 import AdminSaveBar, { useUnsavedWarning } from '@/components/admin/AdminSaveBar';
 
 /** Slugify a Vietnamese name into a URL-safe slug. */
@@ -397,15 +398,12 @@ export default function ProductsAdminPage() {
                     />
                   </div>
 
-                  <div>
-                    <label className="mb-1 block text-sm font-medium text-gray-700">Mô tả chi tiết</label>
-                    <textarea
-                      value={cat.description}
-                      onChange={(e) => updateCategory(cat.id, { description: e.target.value })}
-                      rows={3}
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-amber-500"
-                    />
-                  </div>
+                  <HtmlField
+                    label="Mô tả chi tiết (hiện ở trang sản phẩm)"
+                    value={cat.description}
+                    onChange={(description) => updateCategory(cat.id, { description })}
+                    rows={5}
+                  />
 
                   {/* Main image */}
                   <UploadInput

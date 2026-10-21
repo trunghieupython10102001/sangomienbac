@@ -32,7 +32,7 @@ export default function BackToTop() {
       {isVisible && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-8 right-8 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white p-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 z-50 transform hover:scale-110 group"
+          className="fixed bottom-36 sm:bottom-24 right-8 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white p-4 rounded-2xl shadow-2xl hover:shadow-3xl transition-all duration-300 z-50 transform hover:scale-110 group"
           aria-label="Về đầu trang"
         >
           <ArrowUp className="w-6 h-6 group-hover:-translate-y-1 transition-transform" />

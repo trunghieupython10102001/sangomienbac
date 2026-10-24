@@ -10,10 +10,12 @@ import { Phone, ArrowLeft, Info, Ruler, Package, Layers, Droplets, Shield, Wrenc
 import { useState, useEffect } from "react";
 import ImageViewer from "@/components/ImageViewer";
 import { RichText } from "@/components/HtmlContent";
+import { formatPhone, useSitePhones } from "@/lib/use-site-phones";
 
 export default function CategoryPage() {
   const params = useParams();
   const slug = params.slug as string;
+  const phones = useSitePhones();
   const [allCategories, setAllCategories] = useState<Category[]>(staticCategories);
   const [categoriesLoaded, setCategoriesLoaded] = useState(false);
   const [images, setImages] = useState<ImageEntry[]>([]);
@@ -240,20 +242,16 @@ export default function CategoryPage() {
                       </>
                     )}
                     <div className="space-y-2">
-                      <a
-                        href="tel:0363974768"
-                        className="inline-flex items-center gap-2 bg-white text-amber-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all w-full justify-center"
-                      >
-                        <Phone className="w-5 h-5" />
-                        0363.974.768
-                      </a>
-                      <a
-                        href="tel:0969897297"
-                        className="inline-flex items-center gap-2 bg-white text-amber-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all w-full justify-center"
-                      >
-                        <Phone className="w-5 h-5" />
-                        0969.897.297
-                      </a>
+                      {phones.map((phone) => (
+                        <a
+                          key={phone}
+                          href={`tel:${phone}`}
+                          className="inline-flex items-center gap-2 bg-white text-amber-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all w-full justify-center"
+                        >
+                          <Phone className="w-5 h-5" />
+                          {formatPhone(phone)}
+                        </a>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -345,20 +343,16 @@ export default function CategoryPage() {
               Đội ngũ chuyên viên của chúng tôi sẵn sàng tư vấn miễn phí và báo giá chi tiết cho bạn
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a
-                href="tel:0363974768"
-                className="inline-flex items-center gap-2 bg-white text-amber-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-lg"
-              >
-                <Phone className="w-6 h-6" />
-                0363.974.768
-              </a>
-              <a
-                href="tel:0969897297"
-                className="inline-flex items-center gap-2 bg-white text-amber-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-lg"
-              >
-                <Phone className="w-6 h-6" />
-                0969.897.297
-              </a>
+              {phones.map((phone) => (
+                <a
+                  key={phone}
+                  href={`tel:${phone}`}
+                  className="inline-flex items-center gap-2 bg-white text-amber-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-lg"
+                >
+                  <Phone className="w-6 h-6" />
+                  {formatPhone(phone)}
+                </a>
+              ))}
               <Link
                 href="/lien-he"
                 className="inline-flex items-center gap-2 bg-transparent border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-white hover:text-amber-900 transition-all"

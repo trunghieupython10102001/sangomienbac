@@ -97,7 +97,7 @@ export interface AboutContent {
 
 export const defaultSiteSettings: SiteSettings = {
   shopName: 'Kho sàn gỗ Miền Bắc',
-  phones: ['0363974768', '0969897297'],
+  phones: ['0363974768', '0377602023'],
   email: 'Sangomienbac86@gmail.com',
   address: '26a, ngõ 31 Cầu Diễn, Xuân Phương, Hà Nội',
   workingHours: 'Thứ 2 - Chủ nhật: 8:00 - 18:00',

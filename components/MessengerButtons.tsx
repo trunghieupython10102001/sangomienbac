@@ -80,6 +80,9 @@ export default function MessengerButtons() {
         <a href="tel:0363974768" style={{ ...pill, backgroundColor: '#FF6600' }}>
           ☎️ 0363.974.768
         </a>
+        <a href="tel:0377602023" style={{ ...pill, backgroundColor: '#FF6600' }}>
+          ☎️ 0377.602.023
+        </a>
       </div>
 
       <ContactFormModal isOpen={showContactForm} onClose={() => setShowContactForm(false)} />

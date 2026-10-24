@@ -3,8 +3,10 @@
 import { useState, useEffect } from "react";
 import { Play, X } from "lucide-react";
 import { defaultMediaItems, type MediaItem } from "@/lib/default-data";
+import { formatPhone, useSitePhones } from "@/lib/use-site-phones";
 
 export default function VideoHinhAnhPage() {
+  const phones = useSitePhones();
   const [mediaItems, setMediaItems] = useState<MediaItem[]>(defaultMediaItems);
   const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
   const [filter, setFilter] = useState<"all" | "video" | "image">("all");
@@ -148,18 +150,15 @@ export default function VideoHinhAnhPage() {
             Liên hệ ngay để được tư vấn và báo giá miễn phí
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a
-              href="tel:0363974768"
-              className="group inline-flex items-center gap-3 bg-white text-amber-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
-            >
-              <span>📞 0363.974.768</span>
-            </a>
-            <a
-              href="tel:0969897297"
-              className="group inline-flex items-center gap-3 bg-white text-amber-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
-            >
-              <span>📞 0969.897.297</span>
-            </a>
+            {phones.map((phone) => (
+              <a
+                key={phone}
+                href={`tel:${phone}`}
+                className="group inline-flex items-center gap-3 bg-white text-amber-900 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all shadow-2xl hover:shadow-3xl transform hover:-translate-y-1"
+              >
+                <span>📞 {formatPhone(phone)}</span>
+              </a>
+            ))}
           </div>
         </div>
       </section>
